@@ -31,8 +31,16 @@ public class Example : MonoBehaviour {
 #elif UNITY_ANDROID
 			GrowthPushAndroid.getInstance().initialize(appID, secrect, environment, debug);
 			GrowthPushAndroid.getInstance().register(senderID);
-			GrowthPushAndroid.getInstance().trackEvent("Launch");
-			GrowthPushAndroid.getInstance().setDeviceTags();
+			
+			ReceiveHandlerAndroid receiveHandler = new ReceiveHandlerAndroid(str => {
+				Debug.Log("ReceiveHandlerAndroid receive " + str);
+			});
+			
+			receiveHandler.setCallback(new CallbackAndroid(str => {
+				Debug.Log("CallbackAndroid open " + str);
+			}));
+				
+			GrowthPushAndroid.getInstance().setReceiveHandler(receiveHandler);
 #endif
 		}
 	}

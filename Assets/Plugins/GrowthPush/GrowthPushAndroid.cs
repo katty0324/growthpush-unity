@@ -1,7 +1,9 @@
 using UnityEngine;
 using System.Collections;
-#if UNITY_ANDROID
+using System;
 
+
+#if UNITY_ANDROID
 
 public class GrowthPushAndroid
 {
@@ -12,6 +14,7 @@ public class GrowthPushAndroid
 	};
 	
 	private static GrowthPushAndroid instance = null;	
+	
 	public static GrowthPushAndroid getInstance() 
 	{
 		if(instance == null)
@@ -97,6 +100,79 @@ public class GrowthPushAndroid
 			Debug.LogError( "growthPush is not created.");
 		}
 	}
+	
+	public void setReceiveHandler(ReceiveHandlerAndroid handler)
+	{
+		if( growthPush != null )
+		{
+			growthPush.Call("setReceiveHandler", handler.receiveJava);
+		}
+		else
+		{
+			Debug.LogError( "growthPush is not created.");
+		}
+	}
 }
+
+public class ReceiveHandlerAndroid : MonoBehaviour
+{
+	private static GameObject GO = null;
+	public static void CreateGO()
+	{
+		if(GO == null)
+		{
+			GO = new GameObject ("ReceiveHandlerAndroid");		
+			GO.AddComponent<ReceiveHandlerAndroid>();
+			GO.AddComponent<CallbackAndroid>();
+		}
+	}	
+				
+	private CallbackAndroid callback = null;
+	private Action<string> receiveCallback = null;
+	public AndroidJavaObject receiveJava = null;
+	
+	public ReceiveHandlerAndroid(Action<string> callback)
+	{
+		CreateGO();
+		receiveCallback = callback;
+		receiveJava = new AndroidJavaObject( "com.growthpush.handler.UnityReceiveHandler" );
+	}
+				
+	public void onReceive(string str)
+	{
+		Debug.Log("ReceiveHandlerAndroid " + str); 
+		if(receiveCallback != null)
+			receiveCallback(str);
+	}
+	
+	public void setCallback(CallbackAndroid inCallback)
+	{
+		if(receiveJava != null)
+		{
+			receiveJava.Call("setCallback", inCallback.callbackJava);
+		}
+	}
+		
+}
+
+public class CallbackAndroid : MonoBehaviour
+{
+	private Action<string> openCallback = null;
+	public AndroidJavaObject callbackJava = null;
+	public CallbackAndroid(Action<string> callback)
+	{
+		ReceiveHandlerAndroid.CreateGO();
+		openCallback = callback;
+		callbackJava = new AndroidJavaObject( "com.growthpush.handler.UnityReceiveHandler.UnityCallback" );
+	}
+	
+	public void onOpen(string str)
+	{
+		Debug.Log("CallbackAndroid " + str);
+		if(openCallback != null)
+			openCallback(str);
+	}
+};
+
 #endif
 
