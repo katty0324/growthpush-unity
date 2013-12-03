@@ -114,36 +114,61 @@ public class GrowthPushAndroid
 	}
 }
 
-public class ReceiveHandlerAndroid : MonoBehaviour
+public class ReceiveHandlerAndroid
 {
-	private static GameObject GO = null;
-	public static void CreateGO()
+	public class ReceiveBehavior : MonoBehaviour
 	{
+		public Action<string> receiveCallback = null;
+		public void onReceive(string str)
+		{
+			Debug.Log("ReceiveHandler receive " + str); 
+			if(receiveCallback != null)
+				receiveCallback(str);
+		}
+		
+		public Action<string> openCallback = null;
+		public void onOpen(string str)
+		{
+			Debug.Log("Callback open " + str);
+			if(openCallback != null)
+				openCallback(str);
+		}
+	}
+	
+	private static GameObject GO = null;
+	public static ReceiveBehavior CreateGO()
+	{
+		ReceiveBehavior ret = null;
 		if(GO == null)
 		{
 			GO = new GameObject ("ReceiveHandlerAndroid");		
-			GO.AddComponent<ReceiveHandlerAndroid>();
-			GO.AddComponent<CallbackAndroid>();
+			ret = GO.AddComponent<ReceiveBehavior>();
+			GameObject.DontDestroyOnLoad(GO);
 		}
+		else
+		{
+			ret = GO.GetComponent<ReceiveBehavior>();
+		}
+		return ret;
 	}	
-				
-	private CallbackAndroid callback = null;
-	private Action<string> receiveCallback = null;
-	public AndroidJavaObject receiveJava = null;
 	
+	public static string ReceiveName
+	{
+		get{
+			if(GO == null)
+				return null;
+			return GO.name;
+		}
+	}
+
+	public AndroidJavaObject receiveJava = null;	
 	public ReceiveHandlerAndroid(Action<string> callback)
 	{
-		CreateGO();
-		receiveCallback = callback;
-		receiveJava = new AndroidJavaObject( "com.growthpush.handler.UnityReceiveHandler" );
-	}
-				
-	public void onReceive(string str)
-	{
-		Debug.Log("ReceiveHandlerAndroid " + str); 
-		if(receiveCallback != null)
-			receiveCallback(str);
-	}
+		ReceiveBehavior behavior =  CreateGO();
+		if(behavior != null)
+			behavior.receiveCallback = callback;
+		receiveJava = new AndroidJavaObject( "com.growthpush.handler.UnityReceiveHandler", ReceiveName );
+	}	
 	
 	public void setCallback(CallbackAndroid inCallback)
 	{
@@ -155,23 +180,16 @@ public class ReceiveHandlerAndroid : MonoBehaviour
 		
 }
 
-public class CallbackAndroid : MonoBehaviour
-{
-	private Action<string> openCallback = null;
+public class CallbackAndroid
+{	
 	public AndroidJavaObject callbackJava = null;
 	public CallbackAndroid(Action<string> callback)
 	{
-		ReceiveHandlerAndroid.CreateGO();
-		openCallback = callback;
-		callbackJava = new AndroidJavaObject( "com.growthpush.handler.UnityReceiveHandler.UnityCallback" );
-	}
-	
-	public void onOpen(string str)
-	{
-		Debug.Log("CallbackAndroid " + str);
-		if(openCallback != null)
-			openCallback(str);
-	}
+		ReceiveHandlerAndroid.ReceiveBehavior behavior = ReceiveHandlerAndroid.CreateGO();
+		if(behavior != null)
+			behavior.openCallback = callback;
+		callbackJava = new AndroidJavaObject( "com.growthpush.handler.UnityReceiveHandler.UnityCallback", ReceiveHandlerAndroid.ReceiveName );
+	}	
 };
 
 #endif
