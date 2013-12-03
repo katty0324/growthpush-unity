@@ -116,58 +116,13 @@ public class GrowthPushAndroid
 
 public class ReceiveHandlerAndroid
 {
-	public class ReceiveBehavior : MonoBehaviour
-	{
-		public Action<string> receiveCallback = null;
-		public void onReceive(string str)
-		{
-			Debug.Log("ReceiveHandler receive " + str); 
-			if(receiveCallback != null)
-				receiveCallback(str);
-		}
-		
-		public Action<string> openCallback = null;
-		public void onOpen(string str)
-		{
-			Debug.Log("Callback open " + str);
-			if(openCallback != null)
-				openCallback(str);
-		}
-	}
-	
-	private static GameObject GO = null;
-	public static ReceiveBehavior CreateGO()
-	{
-		ReceiveBehavior ret = null;
-		if(GO == null)
-		{
-			GO = new GameObject ("ReceiveHandlerAndroid");		
-			ret = GO.AddComponent<ReceiveBehavior>();
-			GameObject.DontDestroyOnLoad(GO);
-		}
-		else
-		{
-			ret = GO.GetComponent<ReceiveBehavior>();
-		}
-		return ret;
-	}	
-	
-	public static string ReceiveName
-	{
-		get{
-			if(GO == null)
-				return null;
-			return GO.name;
-		}
-	}
-
 	public AndroidJavaObject receiveJava = null;	
 	public ReceiveHandlerAndroid(Action<string> callback)
 	{
-		ReceiveBehavior behavior =  CreateGO();
+		ReceiveBehaviorAndroid behavior =  ReceiveBehaviorAndroid.CreateGO();
 		if(behavior != null)
 			behavior.receiveCallback = callback;
-		receiveJava = new AndroidJavaObject( "com.growthpush.handler.UnityReceiveHandler", ReceiveName );
+		receiveJava = new AndroidJavaObject( "com.growthpush.handler.UnityReceiveHandler", ReceiveBehaviorAndroid.ReceiveName );
 	}	
 	
 	public void setCallback(CallbackAndroid inCallback)
@@ -185,10 +140,10 @@ public class CallbackAndroid
 	public AndroidJavaObject callbackJava = null;
 	public CallbackAndroid(Action<string> callback)
 	{
-		ReceiveHandlerAndroid.ReceiveBehavior behavior = ReceiveHandlerAndroid.CreateGO();
+		ReceiveBehaviorAndroid behavior = ReceiveBehaviorAndroid.CreateGO();
 		if(behavior != null)
 			behavior.openCallback = callback;
-		callbackJava = new AndroidJavaObject( "com.growthpush.handler.UnityReceiveHandler.UnityCallback", ReceiveHandlerAndroid.ReceiveName );
+		callbackJava = new AndroidJavaObject( "com.growthpush.handler.UnityReceiveHandler.UnityCallback", ReceiveBehaviorAndroid.ReceiveName );
 	}	
 };
 
