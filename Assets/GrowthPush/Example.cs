@@ -36,9 +36,9 @@ public class Example : MonoBehaviour {
 				Debug.Log("ReceiveHandlerAndroid receive " + str);
 			});
 			
-			//receiveHandler.setCallback(new CallbackAndroid(str => {
-			//	Debug.Log("CallbackAndroid open " + str);
-			//}));
+			receiveHandler.setCallback(new CallbackAndroid(str => {
+				Debug.Log("CallbackAndroid open " + str);
+			}));
 				
 			GrowthPushAndroid.getInstance().setReceiveHandler(receiveHandler);
 #endif

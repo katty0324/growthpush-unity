@@ -143,7 +143,7 @@ public class CallbackAndroid
 		ReceiveBehaviorAndroid behavior = ReceiveBehaviorAndroid.CreateGO();
 		if(behavior != null)
 			behavior.openCallback = callback;
-		callbackJava = new AndroidJavaObject( "com.growthpush.handler.UnityReceiveHandler.UnityCallback", ReceiveBehaviorAndroid.ReceiveName );
+		callbackJava = new AndroidJavaObject( "com.growthpush.handler.UnityCallback", ReceiveBehaviorAndroid.ReceiveName );
 	}	
 };
 
