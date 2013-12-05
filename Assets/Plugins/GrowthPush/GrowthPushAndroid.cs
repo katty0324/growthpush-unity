@@ -88,6 +88,23 @@ public class GrowthPushAndroid
 			Debug.LogError( "growthPush is not created.");
 		}
 	}
+	
+	public void setTag(string name) 
+	{
+		setTag(name, "");
+	}
+		
+	public void setTag(string name, string val) 
+	{
+		if( growthPush != null )
+		{
+			growthPush.Call("setTag", name, val);
+		}
+		else
+		{
+			Debug.LogError( "growthPush is not created.");
+		}
+	}
 		
 	public void setDeviceTags() 
 	{

@@ -43,7 +43,7 @@ public class Example : MonoBehaviour {
 				
 			GrowthPushAndroid.getInstance().setReceiveHandler(receiveHandler);
 			GrowthPushAndroid.getInstance().trackEvent("Launch 12");
-			
+			GrowthPushAndroid.getInstance().setTag("Tag123");
 #endif
 		}
 	}
