@@ -74,14 +74,14 @@ public class GrowthPushAndroid
 	
 	public void trackEvent(string name) 
 	{
-		trackEvent(name, null);
+		trackEvent(name, "");
 	}
 	
-	public void trackEvent(string name, string value) 
+	public void trackEvent(string name, string val) 
 	{
 		if( growthPush != null )
 		{
-			growthPush.Call<AndroidJavaObject>("trackEvent", name, value);
+			growthPush.Call("trackEvent", name, val);
 		}
 		else
 		{

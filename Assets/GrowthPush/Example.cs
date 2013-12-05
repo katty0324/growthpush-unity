@@ -38,9 +38,12 @@ public class Example : MonoBehaviour {
 			
 			receiveHandler.setCallback(new CallbackAndroid(str => {
 				Debug.Log("CallbackAndroid open " + str);
+				
 			}));
 				
 			GrowthPushAndroid.getInstance().setReceiveHandler(receiveHandler);
+			GrowthPushAndroid.getInstance().trackEvent("Launch 12");
+			
 #endif
 		}
 	}
