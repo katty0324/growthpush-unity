@@ -1,6 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Plugins/GrowthPush/GrowthPushIOS.cs">
+    <Files>
+      <File FileName="Assets/GrowthPush/Example.cs" Line="43" Column="5" />
+      <File FileName="Assets/Plugins/GrowthPush/ReceiveBehaviorAndroid.cs" Line="1" Column="1" />
+      <File FileName="Assets/Plugins/GrowthPush/GrowthPushAndroid.cs" Line="95" Column="3" />
+      <File FileName="Assets/Plugins/GrowthPush/GrowthPushIOS.cs" Line="28" Column="2" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

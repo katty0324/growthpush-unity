@@ -18,12 +18,96 @@ public class GrowthPushIOS {
 		EGPOptionAll = EGPOptionTrackAll | EGPOptionTagAll,
 	};
 	
+	public enum GPEnvironment
+	{
+		GPEnvironmentUnknown = 0,
+	    GPEnvironmentDevelopment,
+	    GPEnvironmentProduction,
+	};
+	
+	
 	[DllImport("__Internal")]
 	private static extern void _easyGrowthPush_setApplicationId(int appID, string secrect, bool debug);
 	[DllImport("__Internal")]
 	private static extern void _easyGrowthPush_setApplicationId_option(int appID, string secrect, bool debug, int option);
+	
+	[DllImport("__Internal")]
+	private static extern void _growthPush_setApplicationId(int appID, string secrect, int environment, bool debug, int option);
+
+	//[DllImport("__Internal")]
+	//private static extern void _growthPush_requestDeviceToken(DidRequestDeviceToken callback);
+
+	//[DllImport("__Internal")]
+	//private static extern void _growthPush_setDeviceToken(string deviceToken);
+
+	[DllImport("__Internal")]
+	private static extern void _growthPush_trackEvent(string name);
+
+	[DllImport("__Internal")]
+	private static extern void _growthPush_trackEvent_value(string name, string val);
+
+	[DllImport("__Internal")]
+	private static extern void _growthPush_setTag(string name);
+
+	[DllImport("__Internal")]
+	private static extern void _growthPush_setTag_value(string name, string val);
+
+	[DllImport("__Internal")]
+	private static extern void _growthPush_setDeviceTags();
+
+	[DllImport("__Internal")]
+	private static extern void _growthPush_clearBadge();
+	
+	public static void setApplicationId(int appID, string secrect, GPEnvironment environment, bool debug)
+	{
+		_growthPush_setApplicationId(appID, secrect, (int)environment, debug, (int)EGPOption.EGPOptionAll);
+	}
+	
+	public static void setApplicationId(int appID, string secrect, GPEnvironment environment, bool debug, EGPOption option)
+	{
+		_growthPush_setApplicationId(appID, secrect, (int)environment, debug, (int)option);
+	}
+	
+	/*public static void requestDeviceToken(DidRequestDeviceToken callback)
+	{
+	}
+	
+	public static void setDeviceToken(string deviceToken)
+	{
+	}
+	*/
+	
+	public static void trackEvent(string name)
+	{
+		_growthPush_trackEvent(name);
+	}
+	
+	public static void trackEvent(string name, string val)
+	{
+		_growthPush_trackEvent_value(name, val);
+	}
+	
+	public static void setTag(string name)
+	{
+		_growthPush_setTag(name);
+	}
+	
+	public static void setTag(string name, string val)
+	{
+		_growthPush_setTag_value(name, val);
+	}
+	
+	public static void setDeviceTags()
+	{
+		_growthPush_setDeviceTags();
+	}
+	
+	public static void clearBadge()
+	{
+		_growthPush_clearBadge();
+	}
 		
-	public static void setApplicationId(int appID, string secret, bool debug)
+	public static void EasySetApplicationId(int appID, string secret, bool debug)
 	{
 		Debug.Log("_easyGrowthPush_setApplicationId");
 #if !UNITY_EDITOR
@@ -31,7 +115,7 @@ public class GrowthPushIOS {
 #endif
 	}
 	
-	public static void setApplicationId(int appID, string secret, bool debug, EGPOption option)
+	public static void EasySetApplicationId(int appID, string secret, bool debug, EGPOption option)
 	{
 		Debug.Log("_easyGrowthPush_setApplicationId_option");
 #if !UNITY_EDITOR

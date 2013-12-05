@@ -7,6 +7,7 @@ public class Example : MonoBehaviour {
 	public string secrect = "99ym4ntccU89wj1SN3osYT8hqazrocKL";
 	public bool debug = true;
 #if UNITY_IPHONE
+	public GrowthPushIOS.GPEnvironment environment = GrowthPushIOS.GPEnvironment.GPEnvironmentDevelopment;
 	public GrowthPushIOS.EGPOption option = GrowthPushIOS.EGPOption.EGPOptionAll;
 #elif UNITY_ANDROID
 	public GrowthPushAndroid.Environment environment = GrowthPushAndroid.Environment.development;
@@ -27,7 +28,9 @@ public class Example : MonoBehaviour {
 	void OnGUI () {
 		if (GUI.Button (new Rect (10,10,150,100), "Init GrowthPush")) {
 #if UNITY_IPHONE
-			GrowthPushIOS.setApplicationId(appID, secrect, debug, option); 
+			GrowthPushIOS.setApplicationId(appID, secrect, environment, debug, option); 
+			GrowthPushIOS.trackEvent("IOS Launch");
+			GrowthPushIOS.setTag("IOS Tag");
 #elif UNITY_ANDROID
 			GrowthPushAndroid.getInstance().initialize(appID, secrect, environment, debug);
 			GrowthPushAndroid.getInstance().register(senderID);
