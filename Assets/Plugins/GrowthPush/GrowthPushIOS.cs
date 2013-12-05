@@ -25,6 +25,8 @@ public class GrowthPushIOS {
 	    GPEnvironmentProduction,
 	};
 	
+	[DllImport("__Internal")]
+	extern static public void setListenerGameObject(string listenerName);
 	
 	[DllImport("__Internal")]
 	private static extern void _easyGrowthPush_setApplicationId(int appID, string secrect, bool debug);
@@ -34,11 +36,11 @@ public class GrowthPushIOS {
 	[DllImport("__Internal")]
 	private static extern void _growthPush_setApplicationId(int appID, string secrect, int environment, bool debug, int option);
 
-	//[DllImport("__Internal")]
-	//private static extern void _growthPush_requestDeviceToken(DidRequestDeviceToken callback);
+	[DllImport("__Internal")]
+	private static extern void _growthPush_requestDeviceToken();
 
-	//[DllImport("__Internal")]
-	//private static extern void _growthPush_setDeviceToken(string deviceToken);
+	[DllImport("__Internal")]
+	private static extern void _growthPush_setDeviceToken(string deviceToken);
 
 	[DllImport("__Internal")]
 	private static extern void _growthPush_trackEvent(string name);
@@ -68,14 +70,16 @@ public class GrowthPushIOS {
 		_growthPush_setApplicationId(appID, secrect, (int)environment, debug, (int)option);
 	}
 	
-	/*public static void requestDeviceToken(DidRequestDeviceToken callback)
+	public static void requestDeviceToken()
 	{
+		_growthPush_requestDeviceToken();
 	}
 	
 	public static void setDeviceToken(string deviceToken)
 	{
+		_growthPush_setDeviceToken(deviceToken);
 	}
-	*/
+	
 	
 	public static void trackEvent(string name)
 	{

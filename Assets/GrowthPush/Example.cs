@@ -17,7 +17,7 @@ public class Example : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+
 	}
 	
 	// Update is called once per frame
@@ -25,12 +25,28 @@ public class Example : MonoBehaviour {
 		
 	}
 	
+	void onDidRegisterForRemoteNotificationsWithDeviceToken(string deviceToken)
+	{
+		if (deviceToken != null && deviceToken.Length!=0) 
+		{
+			GrowthPushIOS.setDeviceToken(deviceToken);
+			GrowthPushIOS.trackEvent("IOS Launch");
+			GrowthPushIOS.setTag("IOS Tag");
+		}
+	}
+	
+	//Sent when the application failed to be registered with Apple Push Notification Service (APNS).
+	void onDidFailToRegisterForRemoteNotificationsWithError(string error)
+	{
+		Debug.Log(error);
+	}
+	
 	void OnGUI () {
 		if (GUI.Button (new Rect (10,10,150,100), "Init GrowthPush")) {
 #if UNITY_IPHONE
+			GrowthPushIOS.setListenerGameObject(this.gameObject.name);
 			GrowthPushIOS.setApplicationId(appID, secrect, environment, debug, option); 
-			GrowthPushIOS.trackEvent("IOS Launch");
-			GrowthPushIOS.setTag("IOS Tag");
+			GrowthPushIOS.requestDeviceToken();			
 #elif UNITY_ANDROID
 			GrowthPushAndroid.getInstance().initialize(appID, secrect, environment, debug);
 			GrowthPushAndroid.getInstance().register(senderID);

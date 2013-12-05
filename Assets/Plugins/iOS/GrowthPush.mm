@@ -8,30 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <GrowthPush/GrowthPush.h>
-
-/*
-typedef void (*DidRequestDeviceToken)(const char*);
-
-@interface UnityGrowthPushAppDelegate : NSObject <UIApplicationDelegate>
-@property DidRequestDeviceToken didRequestDeviceToken;
-@end
-
-
-@implementation UnityGrowthPushAppDelegate
-@synthesize didRequestDeviceToken;
-
-- (void) willPerformApplication:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    didRequestDeviceToken((const char*)[deviceToken bytes]);
-}
-
-- (void) willPerformApplication:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-    didRequestDeviceToken(nil);
-}
-
-@end
-*/
-
-//static UnityGrowthPushAppDelegate *UnityGPInstance = nil;
+#import "App42PushHandlerInternal.h"
 
 extern "C" void _easyGrowthPush_setApplicationId(int appID, const char* secrect, bool debug)
 {
@@ -51,18 +28,10 @@ extern "C" void _growthPush_setApplicationId(int appID, const char* secrect, int
     [GrowthPush setApplicationId:appID secret:str_secrect environment:environment debug:debug];
 }
 
-/*
-extern "C" void _growthPush_requestDeviceToken(DidRequestDeviceToken callback)
+extern "C" void _growthPush_requestDeviceToken()
 {
-    if(UnityGPInstance == nil)
-    {
-        UnityGPInstance = [[UnityGrowthPushAppDelegate alloc] init];
-        UnityGPInstance.didRequestDeviceToken = callback;
-    }
-    
     [GrowthPush requestDeviceToken];
 }
-*/
 
 extern "C" void _growthPush_setDeviceToken(const char* deviceToken)
 {

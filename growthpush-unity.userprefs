@@ -1,11 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Plugins/GrowthPush/GrowthPushIOS.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/GrowthPush/Example.cs">
     <Files>
-      <File FileName="Assets/GrowthPush/Example.cs" Line="43" Column="5" />
+      <File FileName="Assets/GrowthPush/Example.cs" Line="20" Column="1" />
       <File FileName="Assets/Plugins/GrowthPush/ReceiveBehaviorAndroid.cs" Line="1" Column="1" />
       <File FileName="Assets/Plugins/GrowthPush/GrowthPushAndroid.cs" Line="95" Column="3" />
-      <File FileName="Assets/Plugins/GrowthPush/GrowthPushIOS.cs" Line="28" Column="2" />
+      <File FileName="Assets/Plugins/GrowthPush/GrowthPushIOS.cs" Line="26" Column="4" />
+      <File FileName="../../Downloads/App42iOSUnity3DPushPlugin-master/Sample/Assets/PushScript.cs" Line="40" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
