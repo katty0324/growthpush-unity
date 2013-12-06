@@ -41,7 +41,7 @@ public class GrowthPushIOS {
 	private static extern void _growthPush_requestDeviceToken();
 
 	[DllImport("__Internal")]
-	private static extern void _growthPush_setDeviceToken(byte[] deviceToken);
+	private static extern void _growthPush_setDeviceToken(string deviceToken);
 
 	[DllImport("__Internal")]
 	private static extern void _growthPush_trackEvent(string name);
@@ -87,7 +87,7 @@ public class GrowthPushIOS {
 #endif
 	}
 	
-	public static void setDeviceToken(byte[] deviceToken)
+	public static void setDeviceToken(string deviceToken)
 	{
 #if !UNITY_EDITOR
 		_growthPush_setDeviceToken(deviceToken);
