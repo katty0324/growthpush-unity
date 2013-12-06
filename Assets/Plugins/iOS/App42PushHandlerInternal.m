@@ -41,6 +41,7 @@ void setListenerGameObject(char * listenerName)
 	NSLog(@"Initializing application: %@, %@", app, app.delegate);
 }
 
+
 BOOL app42RunTimeDidFinishLaunching(id self, SEL _cmd, id application, id launchOptions)
 {
 	BOOL result = YES;
@@ -73,11 +74,8 @@ void app42RunTimeDidRegisterForRemoteNotificationsWithDeviceToken(id self, SEL _
                            stringByReplacingOccurrencesOfString:@">" withString:@""]
                           stringByReplacingOccurrencesOfString: @" " withString: @""];
     NSLog(@"deviceToken=%@",deviceToken);
-    const char * str = [deviceToken UTF8String];*/
-    NSString *deviceToken = [[NSString alloc] initWithData:devToken encoding:NSASCIIStringEncoding];
-    //NSString *deviceToken = [NSString stringWithUTF8String:[devToken bytes]];
-    const char * str = [deviceToken cStringUsingEncoding:NSUTF8StringEncoding];
-    UnitySendMessage(listenerGameObject, "onDidRegisterForRemoteNotificationsWithDeviceToken", str);
+     */
+    UnitySendMessage(listenerGameObject, "onDidRegisterForRemoteNotificationsWithDeviceToken", [[devToken description] UTF8String]);
 
 }
 
