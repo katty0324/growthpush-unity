@@ -148,7 +148,7 @@ public class GrowthPush
 		receive.setCallback(new CallbackAndroid(jsonStr => {
 			Dictionary<string, string> jsonObj = MiniJSON.Json.Deserialize(jsonStr) as Dictionary<string, string>;
 			string notificationId = null;
-			if(jsonObj.TryGetValue("notificationId", out notificationId))
+			jsonObj.TryGetValue("notificationId", out notificationId);
 			if(didFinishLaunch != null)
 				didFinishLaunch(notificationId);
 		}));

@@ -16,4 +16,5 @@
 - (void)application:(UIApplication *)application app42didReceiveRemoteNotification:(NSDictionary *)userInfo;
 
 - (BOOL)application:(UIApplication *)application app42didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
+- (void)app42didBecomeActive:(UIApplication *)application;
 @end

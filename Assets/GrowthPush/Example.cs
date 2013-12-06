@@ -26,6 +26,7 @@ public class Example : MonoBehaviour {
 			GrowthPush.register(senderID);
 			GrowthPush.trackEvent("Launching");
 			GrowthPush.setTag("Tagging");
+
 			
 			GrowthPush.didFinishLaunchWithNotificationID(notificationId => {
 				GrowthPush.trackEvent("Launch via push notification " + notificationId);				

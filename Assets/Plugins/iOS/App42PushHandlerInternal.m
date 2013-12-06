@@ -41,6 +41,14 @@ void setListenerGameObject(char * listenerName)
 	NSLog(@"Initializing application: %@, %@", app, app.delegate);
 }
 
+void app42RunTimeDidBecomActive(id self)
+{
+	if ([self respondsToSelector:@selector(app42didBecomeActive:)])
+    {
+		[self app42didBecomeActive:self];
+	}
+    UnitySendMessage(listenerGameObject, "onDidBecomeActive", nil);
+}
 
 BOOL app42RunTimeDidFinishLaunching(id self, SEL _cmd, id application, id launchOptions)
 {
@@ -158,6 +166,9 @@ static void exchangeMethodImplementations(Class class, SEL oldMethod, SEL newMet
 	}
 	
 	delegateClass = [delegate class];
+    
+    exchangeMethodImplementations(delegateClass, @selector(applicationDidBecomeActive:),
+                                  @selector(app42didBecomeActive:), (IMP)app42RunTimeDidBecomActive, "v@:::");
     
 	exchangeMethodImplementations(delegateClass, @selector(application:didFinishLaunchingWithOptions:),
                                   @selector(application:app42didFinishLaunchingWithOptions:), (IMP)app42RunTimeDidFinishLaunching, "v@:::");

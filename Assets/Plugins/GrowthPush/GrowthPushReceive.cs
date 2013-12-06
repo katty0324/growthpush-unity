@@ -78,6 +78,11 @@ public class GrowthPushReceiveIOS : MonoBehaviour
 			didFinishLaunchWithNotificationIDCallback(notificationId);
 	}
 	
+	public void onDidBecomeActive(string str)
+	{
+		GrowthPushIOS.trackEvent("Launch");
+	}
+	
 	private static GameObject GO = null;
 	public static GrowthPushReceiveIOS CreateGO()
 	{
