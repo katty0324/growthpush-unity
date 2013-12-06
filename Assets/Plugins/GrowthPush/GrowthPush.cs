@@ -137,4 +137,11 @@ public class GrowthPush
 		GrowthPushIOS.onPushNotificationsReceived(didPushNotificationsReceived);
 #endif
 	}
+	
+	public static void didFinishLaunchWithNotificationID(Action<string> didFinishLaunch)
+	{
+#if UNITY_IPHONE
+		GrowthPushIOS.didFinishLaunchWithNotificationID(didFinishLaunch);
+#endif
+	}
 }

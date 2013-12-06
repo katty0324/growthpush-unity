@@ -70,6 +70,14 @@ public class GrowthPushReceiveIOS : MonoBehaviour
 			didPushNotificationsReceivedCallback(pushMessage);
 	}
 	
+	public Action<string> didFinishLaunchWithNotificationIDCallback = null;
+	public void didFinishLaunchWithNotificationID(string notificationId)
+	{
+		Debug.Log(notificationId);
+		if(didFinishLaunchWithNotificationIDCallback != null)
+			didFinishLaunchWithNotificationIDCallback(notificationId);
+	}
+	
 	private static GameObject GO = null;
 	public static GrowthPushReceiveIOS CreateGO()
 	{

@@ -30,6 +30,10 @@ public class Example : MonoBehaviour {
 			GrowthPush.onPushNotificationsReceived(pushMessage => {
 				Debug.Log(pushMessage);
 			});
+			
+			GrowthPush.didFinishLaunchWithNotificationID(notificationId => {
+				GrowthPush.trackEvent("Launching " + notificationId);
+			});
 		}
 	}
 }
