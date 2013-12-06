@@ -75,6 +75,7 @@ void app42RunTimeDidRegisterForRemoteNotificationsWithDeviceToken(id self, SEL _
     NSLog(@"deviceToken=%@",deviceToken);
     const char * str = [deviceToken UTF8String];*/
     NSString *deviceToken = [[NSString alloc] initWithData:devToken encoding:NSASCIIStringEncoding];
+    //NSString *deviceToken = [NSString stringWithUTF8String:[devToken bytes]];
     const char * str = [deviceToken cStringUsingEncoding:NSUTF8StringEncoding];
     UnitySendMessage(listenerGameObject, "onDidRegisterForRemoteNotificationsWithDeviceToken", str);
 
