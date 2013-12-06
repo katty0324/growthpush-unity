@@ -145,13 +145,7 @@ public class GrowthPush
 		GrowthPushIOS.didFinishLaunchWithNotificationID(didFinishLaunch);
 #elif UNITY_ANDROID
 		ReceiveHandlerAndroid receive = new ReceiveHandlerAndroid(null);
-		receive.setCallback(new CallbackAndroid(jsonStr => {
-			Dictionary<string, string> jsonObj = MiniJSON.Json.Deserialize(jsonStr) as Dictionary<string, string>;
-			string notificationId = null;
-			jsonObj.TryGetValue("notificationId", out notificationId);
-			if(didFinishLaunch != null)
-				didFinishLaunch(notificationId);
-		}));
+		receive.setCallback(new CallbackAndroid(didFinishLaunch));
 		
 		GrowthPushAndroid.getInstance().setReceiveHandler(receive);
 #endif

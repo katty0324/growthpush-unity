@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 public class GrowthPusReceiveAndroid : MonoBehaviour
 {
@@ -16,8 +17,15 @@ public class GrowthPusReceiveAndroid : MonoBehaviour
 	public void onOpen(string str)
 	{
 		Debug.Log("Callback open " + str);
-		if(openCallback != null)
-			openCallback(str);
+		Dictionary<string, object> jsonObj = MiniJSON.Json.Deserialize(str) as Dictionary<string, object>;
+		object notificationId = null;
+		if(jsonObj != null)
+		{
+			jsonObj.TryGetValue("notificationId", out notificationId);
+			Debug.Log("notificationId " + notificationId);
+			if(notificationId != null && openCallback != null)
+				openCallback(notificationId as string);
+		}
 	}
 	
 	private static GameObject GO = null;
