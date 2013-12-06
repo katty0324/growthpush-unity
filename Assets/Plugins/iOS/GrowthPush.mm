@@ -35,7 +35,8 @@ extern "C" void _growthPush_requestDeviceToken()
 
 extern "C" void _growthPush_setDeviceToken(const char* deviceToken)
 {
-    [GrowthPush setDeviceToken:[NSData dataWithBytes:deviceToken length:strlen(deviceToken)]];
+    NSString *str = [NSString stringWithUTF8String:deviceToken];
+    [GrowthPush setDeviceToken:[str dataUsingEncoding:NSUTF8StringEncoding]];
 }
 
 

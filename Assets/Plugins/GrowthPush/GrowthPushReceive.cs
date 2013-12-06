@@ -49,8 +49,8 @@ public class GrowthPusReceiveAndroid : MonoBehaviour
 
 public class GrowthPushReceiveIOS : MonoBehaviour
 {
-	public Action<string> didRegisterForRemoteNotificationsWithDeviceTokenCallback = null;
-	public void onDidRegisterForRemoteNotificationsWithDeviceToken(string deviceToken)
+	public Action<byte[]> didRegisterForRemoteNotificationsWithDeviceTokenCallback = null;
+	public void onDidRegisterForRemoteNotificationsWithDeviceToken(byte[] deviceToken)
 	{
 		if (didRegisterForRemoteNotificationsWithDeviceTokenCallback != null) 
 			didRegisterForRemoteNotificationsWithDeviceTokenCallback(deviceToken);			
