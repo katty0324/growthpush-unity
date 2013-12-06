@@ -146,11 +146,11 @@ def process_pbxproj(xcodeproj_filename, frameworks, resfiles):
 	i = 0
 	found = False
 	while (not found) and (lines[i][3:6] != 'End'):
-		found = lines[i].find('ExternalAccessory.framework') > 0
+		found = lines[i].find('GrowthPush.framework') > 0
 		i = i+1
 
 	if found:
-		print "RobotKit and ExternalAccessory have already been added to XCode project"
+		print "GrowthPush have already been added to XCode project"
 	else:
 		# Next open up an empty project.pbxproj for writing and iterate over the old
 		# file copying the original file and inserting anything extra we need
