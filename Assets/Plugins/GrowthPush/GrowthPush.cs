@@ -48,7 +48,7 @@ public class GrowthPush
 		GrowthPushAndroid.Environment evAnd = GrowthPushAndroid.Environment.development;
 		if(evironment == Environment.production)
 			evAnd = GrowthPushAndroid.Environment.production;		
-		GrowthPushAndroid.getInstance().initialize(ApplicationId, secrect, evAnd, debug); 
+		GrowthPushAndroid.getInstance().initialize(applicationId, secrect, evAnd, debug); 
 #elif UNITY_IPHONE
 		GrowthPushIOS.setApplicationId(applicationId, secrect, (GrowthPushIOS.GPEnvironment)evironment, debug);
 #endif
