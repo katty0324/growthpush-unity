@@ -25,12 +25,6 @@ public class Example : MonoBehaviour {
 		
 	}
 	
-		//Sent when the application failed to be registered with Apple Push Notification Service (APNS).
-	void onDidFailToRegisterForRemoteNotificationsWithError(string error)
-	{
-		Debug.Log(error);
-	}
-	
 	void OnGUI () {
 		if (GUI.Button (new Rect (10,10,150,100), "Init GrowthPush")) {
 #if UNITY_IPHONE

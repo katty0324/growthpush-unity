@@ -56,6 +56,12 @@ public class GrowthPushReceiveIOS : MonoBehaviour
 			didRegisterForRemoteNotificationsWithDeviceTokenCallback(deviceToken);			
 	}
 	
+	//Sent when the application failed to be registered with Apple Push Notification Service (APNS).
+	public void onDidFailToRegisterForRemoteNotificationsWithError(string error)
+	{
+		Debug.Log(error);
+	}
+	
 	private static GameObject GO = null;
 	public static GrowthPushReceiveIOS CreateGO()
 	{
