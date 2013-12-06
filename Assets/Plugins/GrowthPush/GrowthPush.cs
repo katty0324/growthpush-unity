@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Runtime.InteropServices;
 using System;
+using System.Collections.Generic;
 
 public class GrowthPush
 {
@@ -142,6 +143,17 @@ public class GrowthPush
 	{
 #if UNITY_IPHONE
 		GrowthPushIOS.didFinishLaunchWithNotificationID(didFinishLaunch);
+#elif UNITY_ANDROID
+		ReceiveHandlerAndroid receive = new ReceiveHandlerAndroid(null);
+		receive.setCallback(new CallbackAndroid(jsonStr => {
+			Dictionary<string, string> jsonObj = MiniJSON.Json.Deserialize(jsonStr) as Dictionary<string, string>;
+			string notificationId = null;
+			if(jsonObj.TryGetValue("notificationId", out notificationId))
+			if(didFinishLaunch != null)
+				didFinishLaunch(notificationId);
+		}));
+		
+		GrowthPushAndroid.getInstance().setReceiveHandler(receive);
 #endif
 	}
 }

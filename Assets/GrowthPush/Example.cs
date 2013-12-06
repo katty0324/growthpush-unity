@@ -27,12 +27,8 @@ public class Example : MonoBehaviour {
 			GrowthPush.trackEvent("Launching");
 			GrowthPush.setTag("Tagging");
 			
-			GrowthPush.onPushNotificationsReceived(pushMessage => {
-				Debug.Log(pushMessage);
-			});
-			
 			GrowthPush.didFinishLaunchWithNotificationID(notificationId => {
-				GrowthPush.trackEvent("Launching " + notificationId);
+				GrowthPush.trackEvent("Launch via push notification " + notificationId);				
 			});
 		}
 	}
