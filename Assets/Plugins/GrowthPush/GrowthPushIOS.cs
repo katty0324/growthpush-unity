@@ -138,6 +138,15 @@ public class GrowthPushIOS {
 		_growthPush_clearBadge();
 #endif
 	}
+	
+	public static void onPushNotificationsReceived(Action<string> didPushNotificationsReceived)
+	{
+#if UNITY_IPHONE && !UNITY_EDITOR
+		GrowthPushReceiveIOS receive = GrowthPushReceiveIOS.CreateGO();
+		if(receive != null)
+			receive.didPushNotificationsReceivedCallback = didPushNotificationsReceived;
+#endif
+	}
 		
 	public static void EasySetApplicationId(int appID, string secret, bool debug)
 	{

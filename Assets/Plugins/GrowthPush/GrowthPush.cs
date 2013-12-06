@@ -130,4 +130,11 @@ public class GrowthPush
 		GrowthPushIOS.clearBadge();
 #endif
 	}
+	
+	public static void onPushNotificationsReceived(Action<string> didPushNotificationsReceived)
+	{
+#if UNITY_IPHONE
+		GrowthPushIOS.onPushNotificationsReceived(didPushNotificationsReceived);
+#endif
+	}
 }
