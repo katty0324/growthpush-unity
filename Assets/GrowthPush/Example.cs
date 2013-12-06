@@ -25,17 +25,7 @@ public class Example : MonoBehaviour {
 		
 	}
 	
-	void onDidRegisterForRemoteNotificationsWithDeviceToken(string deviceToken)
-	{
-		if (deviceToken != null && deviceToken.Length!=0) 
-		{
-			GrowthPushIOS.setDeviceToken(deviceToken);
-			GrowthPushIOS.trackEvent("IOS Launch");
-			GrowthPushIOS.setTag("IOS Tag");
-		}
-	}
-	
-	//Sent when the application failed to be registered with Apple Push Notification Service (APNS).
+		//Sent when the application failed to be registered with Apple Push Notification Service (APNS).
 	void onDidFailToRegisterForRemoteNotificationsWithError(string error)
 	{
 		Debug.Log(error);
@@ -44,9 +34,15 @@ public class Example : MonoBehaviour {
 	void OnGUI () {
 		if (GUI.Button (new Rect (10,10,150,100), "Init GrowthPush")) {
 #if UNITY_IPHONE
-			GrowthPushIOS.setListenerGameObject(this.gameObject.name);
 			GrowthPushIOS.setApplicationId(appID, secrect, environment, debug, option); 
-			GrowthPushIOS.requestDeviceToken();			
+			GrowthPushIOS.requestDeviceToken(deviceToken => {
+				if (deviceToken != null && deviceToken.Length!=0) 
+				{
+					GrowthPushIOS.setDeviceToken(deviceToken);
+				}
+			});			
+			GrowthPushIOS.trackEvent("IOS Launch");
+			GrowthPushIOS.setTag("IOS Tag");
 #elif UNITY_ANDROID
 			GrowthPushAndroid.getInstance().initialize(appID, secrect, environment, debug);
 			GrowthPushAndroid.getInstance().register(senderID);

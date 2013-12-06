@@ -136,10 +136,10 @@ public class ReceiveHandlerAndroid
 	public AndroidJavaObject receiveJava = null;	
 	public ReceiveHandlerAndroid(Action<string> callback)
 	{
-		ReceiveBehaviorAndroid behavior =  ReceiveBehaviorAndroid.CreateGO();
+		GrowthPusReceiveAndroid behavior =  GrowthPusReceiveAndroid.CreateGO();
 		if(behavior != null)
 			behavior.receiveCallback = callback;
-		receiveJava = new AndroidJavaObject( "com.growthpush.handler.UnityReceiveHandler", ReceiveBehaviorAndroid.ReceiveName );
+		receiveJava = new AndroidJavaObject( "com.growthpush.handler.UnityReceiveHandler", GrowthPusReceiveAndroid.ReceiveName );
 	}	
 	
 	public void setCallback(CallbackAndroid inCallback)
@@ -157,10 +157,10 @@ public class CallbackAndroid
 	public AndroidJavaObject callbackJava = null;
 	public CallbackAndroid(Action<string> callback)
 	{
-		ReceiveBehaviorAndroid behavior = ReceiveBehaviorAndroid.CreateGO();
+		GrowthPusReceiveAndroid behavior = GrowthPusReceiveAndroid.CreateGO();
 		if(behavior != null)
 			behavior.openCallback = callback;
-		callbackJava = new AndroidJavaObject( "com.growthpush.handler.UnityCallback", ReceiveBehaviorAndroid.ReceiveName );
+		callbackJava = new AndroidJavaObject( "com.growthpush.handler.UnityCallback", GrowthPusReceiveAndroid.ReceiveName );
 	}	
 };
 

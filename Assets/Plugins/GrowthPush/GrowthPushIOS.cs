@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Runtime.InteropServices;
+using System;
 #if UNITY_IPHONE
 public class GrowthPushIOS {
 	public enum EGPOption
@@ -26,7 +27,7 @@ public class GrowthPushIOS {
 	};
 	
 	[DllImport("__Internal")]
-	extern static public void setListenerGameObject(string listenerName);
+	extern static private void setListenerGameObject(string listenerName);
 	
 	[DllImport("__Internal")]
 	private static extern void _easyGrowthPush_setApplicationId(int appID, string secrect, bool debug);
@@ -70,8 +71,13 @@ public class GrowthPushIOS {
 		_growthPush_setApplicationId(appID, secrect, (int)environment, debug, (int)option);
 	}
 	
-	public static void requestDeviceToken()
+	public static void requestDeviceToken(Action<string> didRequestDeviceToken)
 	{
+		GrowthPushReceiveIOS receive = GrowthPushReceiveIOS.CreateGO();
+		if(receive != null)
+			receive.didRegisterForRemoteNotificationsWithDeviceTokenCallback = didRequestDeviceToken;
+		
+		setListenerGameObject(GrowthPushReceiveIOS.ReceiveName);
 		_growthPush_requestDeviceToken();
 	}
 	
