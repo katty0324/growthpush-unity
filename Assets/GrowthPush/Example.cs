@@ -41,8 +41,8 @@ public class Example : MonoBehaviour {
 					GrowthPushIOS.setDeviceToken(deviceToken);
 				}
 			});			
-			GrowthPushIOS.trackEvent("IOS Launch");
-			GrowthPushIOS.setTag("IOS Tag");
+			GrowthPushIOS.trackEvent("IOS Launch 123");
+			GrowthPushIOS.setTag("IOS Tag 123");
 #elif UNITY_ANDROID
 			GrowthPushAndroid.getInstance().initialize(appID, secrect, environment, debug);
 			GrowthPushAndroid.getInstance().register(senderID);
@@ -57,8 +57,8 @@ public class Example : MonoBehaviour {
 			}));
 				
 			GrowthPushAndroid.getInstance().setReceiveHandler(receiveHandler);
-			GrowthPushAndroid.getInstance().trackEvent("Launch 12");
-			GrowthPushAndroid.getInstance().setTag("Tag123");
+			GrowthPushAndroid.getInstance().trackEvent("Android Launch 123");
+			GrowthPushAndroid.getInstance().setTag("Android Tag 123");
 #endif
 		}
 	}
