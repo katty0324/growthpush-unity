@@ -63,58 +63,78 @@ public class GrowthPushIOS {
 	
 	public static void setApplicationId(int appID, string secrect, GPEnvironment environment, bool debug)
 	{
+#if !UNITY_EDITOR
 		_growthPush_setApplicationId(appID, secrect, (int)environment, debug, (int)EGPOption.EGPOptionAll);
+#endif
 	}
 	
 	public static void setApplicationId(int appID, string secrect, GPEnvironment environment, bool debug, EGPOption option)
 	{
+#if !UNITY_EDITOR
 		_growthPush_setApplicationId(appID, secrect, (int)environment, debug, (int)option);
+#endif
 	}
 	
 	public static void requestDeviceToken(Action<string> didRequestDeviceToken)
 	{
+#if !UNITY_EDITOR
 		GrowthPushReceiveIOS receive = GrowthPushReceiveIOS.CreateGO();
 		if(receive != null)
 			receive.didRegisterForRemoteNotificationsWithDeviceTokenCallback = didRequestDeviceToken;
 		
 		setListenerGameObject(GrowthPushReceiveIOS.ReceiveName);
 		_growthPush_requestDeviceToken();
+#endif
 	}
 	
 	public static void setDeviceToken(string deviceToken)
 	{
+#if !UNITY_EDITOR
 		_growthPush_setDeviceToken(deviceToken);
+#endif
 	}
 	
 	
 	public static void trackEvent(string name)
 	{
+#if !UNITY_EDITOR
 		_growthPush_trackEvent(name);
+#endif
 	}
 	
 	public static void trackEvent(string name, string val)
 	{
+#if !UNITY_EDITOR
 		_growthPush_trackEvent_value(name, val);
+#endif
 	}
 	
 	public static void setTag(string name)
 	{
+#if !UNITY_EDITOR
 		_growthPush_setTag(name);
+#endif
 	}
 	
 	public static void setTag(string name, string val)
 	{
+#if !UNITY_EDITOR
 		_growthPush_setTag_value(name, val);
+#endif
 	}
 	
 	public static void setDeviceTags()
 	{
+#if !UNITY_EDITOR
 		_growthPush_setDeviceTags();
+#endif
 	}
 	
 	public static void clearBadge()
 	{
+#if !UNITY_EDITOR
 		_growthPush_clearBadge();
+#endif
 	}
 		
 	public static void EasySetApplicationId(int appID, string secret, bool debug)
