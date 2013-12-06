@@ -47,7 +47,8 @@ void app42RunTimeDidBecomActive(id self)
     {
 		[self app42didBecomeActive:self];
 	}
-    UnitySendMessage(listenerGameObject, "onDidBecomeActive", nil);
+    if(listenerGameObject != 0)
+        UnitySendMessage(listenerGameObject, "onDidBecomeActive", nil);
 }
 
 BOOL app42RunTimeDidFinishLaunching(id self, SEL _cmd, id application, id launchOptions)
@@ -83,7 +84,8 @@ void app42RunTimeDidRegisterForRemoteNotificationsWithDeviceToken(id self, SEL _
                           stringByReplacingOccurrencesOfString: @" " withString: @""];
     NSLog(@"deviceToken=%@",deviceToken);
      */
-    UnitySendMessage(listenerGameObject, "onDidRegisterForRemoteNotificationsWithDeviceToken", [[devToken description] UTF8String]);
+    if(listenerGameObject != 0)
+        UnitySendMessage(listenerGameObject, "onDidRegisterForRemoteNotificationsWithDeviceToken", [[devToken description] UTF8String]);
 
 }
 
@@ -95,7 +97,8 @@ void app42RunTimeDidFailToRegisterForRemoteNotificationsWithError(id self, SEL _
 	}
 	NSString *errorString = [error description];
     const char * str = [errorString UTF8String];
-    UnitySendMessage(listenerGameObject, "onDidFailToRegisterForRemoteNotificationsWithError", str);
+    if(listenerGameObject != 0)
+        UnitySendMessage(listenerGameObject, "onDidFailToRegisterForRemoteNotificationsWithError", str);
 	NSLog(@"Error registering for push notifications. Error: %@", error);
 }
 
@@ -124,11 +127,13 @@ void app42RunTimeDidReceiveRemoteNotification(id self, SEL _cmd, id application,
     if (jsonString)
     {
         const char * str = [jsonString UTF8String];
-        UnitySendMessage(listenerGameObject, "onPushNotificationsReceived", str);
+        if(listenerGameObject != 0)
+            UnitySendMessage(listenerGameObject, "onPushNotificationsReceived", str);
     }
     else
     {
-        UnitySendMessage(listenerGameObject, "onPushNotificationsReceived", nil);
+        if(listenerGameObject != 0)
+            UnitySendMessage(listenerGameObject, "onPushNotificationsReceived", nil);
     }
 }
 
