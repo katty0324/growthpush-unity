@@ -3,8 +3,6 @@ using System.Collections;
 using System;
 
 
-#if UNITY_ANDROID
-
 public class GrowthPushAndroid
 {
 	public enum Environment 
@@ -21,15 +19,18 @@ public class GrowthPushAndroid
 			instance = new GrowthPushAndroid();
 		return instance;
 	}
-	
+#if UNITY_ANDROID && !UNITY_EDITOR	
 	private AndroidJavaObject growthPush = null;	
+#endif
 	
 	private GrowthPushAndroid()
 	{
+#if UNITY_ANDROID && !UNITY_EDITOR
 		using(AndroidJavaClass gpclass = new AndroidJavaClass( "com.growthpush.GrowthPush" ))
 		{
 			growthPush = gpclass.CallStatic<AndroidJavaObject>("getInstance");
 		}
+#endif
 	}
 
 	public GrowthPushAndroid initialize(int applicationId, string secret) 
@@ -44,6 +45,7 @@ public class GrowthPushAndroid
 
 	public GrowthPushAndroid initialize(int applicationId, string secret, Environment environment, bool debug) 
 	{		
+#if UNITY_ANDROID && !UNITY_EDITOR
 		if( growthPush != null )
 		{
 			AndroidJavaClass enviClassJava = new AndroidJavaClass("com.growthpush.model.Environment");
@@ -56,11 +58,13 @@ public class GrowthPushAndroid
 		{
 			Debug.LogError( "growthPush is not created.");
 		}
+#endif
 		return this;
 	}
 	
 	public GrowthPushAndroid register(string senderId) 
 	{
+#if UNITY_ANDROID && !UNITY_EDITOR
 		if( growthPush != null )
 		{
 			growthPush.Call<AndroidJavaObject>("register", senderId);
@@ -69,6 +73,7 @@ public class GrowthPushAndroid
 		{
 			Debug.LogError( "growthPush is not created.");
 		}
+#endif
 		return this;
 	}
 	
@@ -79,6 +84,7 @@ public class GrowthPushAndroid
 	
 	public void trackEvent(string name, string val) 
 	{
+#if UNITY_ANDROID && !UNITY_EDITOR
 		if( growthPush != null )
 		{
 			growthPush.Call("trackEvent", name, val);
@@ -87,6 +93,7 @@ public class GrowthPushAndroid
 		{
 			Debug.LogError( "growthPush is not created.");
 		}
+#endif
 	}
 	
 	public void setTag(string name) 
@@ -96,6 +103,7 @@ public class GrowthPushAndroid
 		
 	public void setTag(string name, string val) 
 	{
+#if UNITY_ANDROID && !UNITY_EDITOR
 		if( growthPush != null )
 		{
 			growthPush.Call("setTag", name, val);
@@ -104,10 +112,12 @@ public class GrowthPushAndroid
 		{
 			Debug.LogError( "growthPush is not created.");
 		}
+#endif
 	}
 		
 	public void setDeviceTags() 
 	{
+#if UNITY_ANDROID && !UNITY_EDITOR
 		if( growthPush != null )
 		{
 			growthPush.Call("setDeviceTags");
@@ -116,10 +126,12 @@ public class GrowthPushAndroid
 		{
 			Debug.LogError( "growthPush is not created.");
 		}
+#endif
 	}
 	
 	public void setReceiveHandler(ReceiveHandlerAndroid handler)
 	{
+#if UNITY_ANDROID && !UNITY_EDITOR
 		if( growthPush != null )
 		{
 			growthPush.Call("setReceiveHandler", handler.receiveJava);
@@ -128,11 +140,13 @@ public class GrowthPushAndroid
 		{
 			Debug.LogError( "growthPush is not created.");
 		}
+#endif
 	}
 }
 
 public class ReceiveHandlerAndroid
 {
+#if UNITY_ANDROID
 	public AndroidJavaObject receiveJava = null;	
 	public ReceiveHandlerAndroid(Action<string> callback)
 	{
@@ -149,11 +163,12 @@ public class ReceiveHandlerAndroid
 			receiveJava.Call("setCallback", inCallback.callbackJava);
 		}
 	}
-		
+#endif	
 }
 
 public class CallbackAndroid
 {	
+#if UNITY_ANDROID
 	public AndroidJavaObject callbackJava = null;
 	public CallbackAndroid(Action<string> callback)
 	{
@@ -162,7 +177,8 @@ public class CallbackAndroid
 			behavior.openCallback = callback;
 		callbackJava = new AndroidJavaObject( "com.growthpush.handler.UnityCallback", GrowthPusReceiveAndroid.ReceiveName );
 	}	
+#endif
 };
 
-#endif
+
 
