@@ -19,18 +19,6 @@ void registerForRemoteNotifications()
 */
 
 
-char * listenerGameObject = 0;
-void setListenerGameObject(char * listenerName)
-{
-	free(listenerGameObject);
-    listenerGameObject = 0;
-	int len = strlen(listenerName);
-	listenerGameObject = malloc(len+1);
-	strcpy(listenerGameObject, listenerName);
-}
-
-
-
 @implementation UIApplication(App42PushHandlerInternal)
 
 +(void)load
@@ -73,7 +61,8 @@ BOOL app42RunTimeDidFinishLaunching(id self, SEL _cmd, id application, id launch
         NSString *notificationId = [[remoteNotificationDictionary objectForKey:@"growthpush"] objectForKey:@"notificationId"];
 
         if(notificationId != nil)
-            [GrowthPush trackEvent:[NSString stringWithFormat:@"Launch via push notification %@", notificationId]];
+            //[GrowthPush trackEvent:[NSString stringWithFormat:@"Launch via push notification %@", notificationId]];
+            UnitySendMessage("GrowthPushReceiveIOS", "launchWithNotification", [notificationId UTF8String]);
         else
             [GrowthPush trackEvent:@"Launch"];
     }
@@ -98,8 +87,7 @@ void app42RunTimeDidRegisterForRemoteNotificationsWithDeviceToken(id self, SEL _
                           stringByReplacingOccurrencesOfString: @" " withString: @""];
     NSLog(@"deviceToken=%@",deviceToken);
      */
-    if(listenerGameObject != 0)
-        UnitySendMessage(listenerGameObject, "onDidRegisterForRemoteNotificationsWithDeviceToken", [[devToken description] UTF8String]);
+    UnitySendMessage("GrowthPushReceiveIOS", "onDidRegisterForRemoteNotificationsWithDeviceToken", [[devToken description] UTF8String]);
 
 }
 
@@ -111,8 +99,7 @@ void app42RunTimeDidFailToRegisterForRemoteNotificationsWithError(id self, SEL _
 	}
 	NSString *errorString = [error description];
     const char * str = [errorString UTF8String];
-    if(listenerGameObject != 0)
-        UnitySendMessage(listenerGameObject, "onDidFailToRegisterForRemoteNotificationsWithError", str);
+    UnitySendMessage("GrowthPushReceiveIOS", "onDidFailToRegisterForRemoteNotificationsWithError", str);
 	NSLog(@"Error registering for push notifications. Error: %@", error);
 }
 
@@ -141,13 +128,11 @@ void app42RunTimeDidReceiveRemoteNotification(id self, SEL _cmd, id application,
     if (jsonString)
     {
         const char * str = [jsonString UTF8String];
-        if(listenerGameObject != 0)
-            UnitySendMessage(listenerGameObject, "onPushNotificationsReceived", str);
+        UnitySendMessage("GrowthPushReceiveIOS", "onPushNotificationsReceived", str);
     }
     else
     {
-        if(listenerGameObject != 0)
-            UnitySendMessage(listenerGameObject, "onPushNotificationsReceived", nil);
+        UnitySendMessage("GrowthPushReceiveIOS", "onPushNotificationsReceived", nil);
     }
 }
 

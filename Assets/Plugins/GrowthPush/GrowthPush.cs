@@ -131,4 +131,16 @@ public class GrowthPush
 		GrowthPushIOS.clearBadge();
 #endif
 	}
+	
+	public static void launchWithNotification(Action<string> callback)
+	{
+		GrowthPushReceive receive = null;
+#if UNITY_IPHONE
+		receive = GrowthPushReceiveIOS.CreateGO();
+#elif UNITY_ANDROID
+		receive = GrowthPushReceiveAndroid.CreateGO();
+#endif
+		if(receive != null)
+			receive.launchWithNotificationCallback = callback;
+	}
 }

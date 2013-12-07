@@ -28,9 +28,6 @@ public class GrowthPushIOS {
 	
 #if UNITY_IPHONE	
 	[DllImport("__Internal")]
-	extern static private void setListenerGameObject(string listenerName);
-	
-	[DllImport("__Internal")]
 	private static extern void _easyGrowthPush_setApplicationId(int appID, string secrect, bool debug);
 	[DllImport("__Internal")]
 	private static extern void _easyGrowthPush_setApplicationId_option(int appID, string secrect, bool debug, int option);
@@ -84,7 +81,6 @@ public class GrowthPushIOS {
 		if(receive != null)
 			receive.didRegisterForRemoteNotificationsWithDeviceTokenCallback = didRequestDeviceToken;
 		
-		setListenerGameObject(GrowthPushReceiveIOS.ReceiveName);
 		_growthPush_requestDeviceToken();
 #endif
 	}

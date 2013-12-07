@@ -3,7 +3,48 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 
-public class GrowthPushReceiveIOS : MonoBehaviour
+public abstract class GrowthPushReceive : MonoBehaviour
+{
+	private static GameObject GO = null;
+	public static GrowthPushReceive CreateGO()
+	{
+		GrowthPushReceive ret = null;
+		if(GO == null)
+		{
+					
+#if UNITY_IPHONE
+			GO = new GameObject ("GrowthPushReceiveIOS");
+			ret = GO.AddComponent<GrowthPushReceiveIOS>();
+#elif UNITY_ANDROID
+			GO = new GameObject ("GrowthPushReceiveAndroid");
+			ret = GO.AddComponent<GrowthPushReceiveAndroid>();
+#endif
+			GameObject.DontDestroyOnLoad(GO);
+		}
+		else
+		{
+#if UNITY_IPHONE
+			ret = GO.GetComponent<GrowthPushReceiveIOS>();
+#elif UNITY_ANDROID
+			ret = GO.GetComponent<GrowthPushReceiveAndroid>();
+#endif
+		}
+		return ret;
+	}	
+	
+	public Action<string> launchWithNotificationCallback = null;
+	public void launchWithNotification(string notificationId)
+	{
+		if (launchWithNotificationCallback != null) 
+			launchWithNotificationCallback(notificationId);			
+	}
+}
+
+public class GrowthPushReceiveAndroid : GrowthPushReceive
+{
+}
+
+public class GrowthPushReceiveIOS : GrowthPushReceive
 {
 	public Action<string> didRegisterForRemoteNotificationsWithDeviceTokenCallback = null;
 	public void onDidRegisterForRemoteNotificationsWithDeviceToken(string deviceToken)
@@ -16,32 +57,6 @@ public class GrowthPushReceiveIOS : MonoBehaviour
 	public void onDidFailToRegisterForRemoteNotificationsWithError(string error)
 	{
 		Debug.Log(error);
-	}
-	
-	private static GameObject GO = null;
-	public static GrowthPushReceiveIOS CreateGO()
-	{
-		GrowthPushReceiveIOS ret = null;
-		if(GO == null)
-		{
-			GO = new GameObject ("GrowthPushReceiveIOS");		
-			ret = GO.AddComponent<GrowthPushReceiveIOS>();
-			GameObject.DontDestroyOnLoad(GO);
-		}
-		else
-		{
-			ret = GO.GetComponent<GrowthPushReceiveIOS>();
-		}
-		return ret;
-	}	
-	
-	public static string ReceiveName
-	{
-		get{
-			if(GO == null)
-				return null;
-			return GO.name;
-		}
 	}
 }
 	

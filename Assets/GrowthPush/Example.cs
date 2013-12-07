@@ -26,6 +26,11 @@ public class Example : MonoBehaviour {
 			GrowthPush.register(senderID);
 			GrowthPush.trackEvent("Launching");
 			GrowthPush.setTag("Tagging");
+			
+			GrowthPush.launchWithNotification(notificationId => {
+				Debug.Log("notificationId " + notificationId);
+				GrowthPush.trackEvent("Launch via push notification " + notificationId);
+			});
 		}
 	}
 }
