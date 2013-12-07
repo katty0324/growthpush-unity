@@ -66,7 +66,15 @@ BOOL app42RunTimeDidFinishLaunching(id self, SEL _cmd, id application, id launch
 	}
 	
 	//[[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-	
+    
+	NSDictionary *remoteNotificationDictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if (remoteNotificationDictionary != nil) {
+        
+        NSString *notificationId = [[remoteNotificationDictionary objectForKey:@"growthpush"] objectForKey:@"notificationId"];
+
+    if(listenerGameObject != 0 && notificationId != nil)
+        UnitySendMessage(listenerGameObject, "didFinishLaunchWithNotificationID", [notificationId UTF8String]);    
+    
 	return result;
 }
 
