@@ -131,23 +131,4 @@ public class GrowthPush
 		GrowthPushIOS.clearBadge();
 #endif
 	}
-	
-	public static void onPushNotificationsReceived(Action<string> didPushNotificationsReceived)
-	{
-#if UNITY_IPHONE
-		GrowthPushIOS.onPushNotificationsReceived(didPushNotificationsReceived);
-#endif
-	}
-	
-	public static void didFinishLaunchWithNotificationID(Action<string> didFinishLaunch)
-	{
-#if UNITY_IPHONE
-		GrowthPushIOS.didFinishLaunchWithNotificationID(didFinishLaunch);
-#elif UNITY_ANDROID
-		ReceiveHandlerAndroid receive = new ReceiveHandlerAndroid(null);
-		receive.setCallback(new CallbackAndroid(didFinishLaunch));
-		
-		GrowthPushAndroid.getInstance().setReceiveHandler(receive);
-#endif
-	}
 }

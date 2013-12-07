@@ -139,24 +139,6 @@ public class GrowthPushIOS {
 #endif
 	}
 	
-	public static void onPushNotificationsReceived(Action<string> didPushNotificationsReceived)
-	{
-#if UNITY_IPHONE && !UNITY_EDITOR
-		GrowthPushReceiveIOS receive = GrowthPushReceiveIOS.CreateGO();
-		if(receive != null)
-			receive.didPushNotificationsReceivedCallback = didPushNotificationsReceived;
-#endif
-	}
-	
-	public static void didFinishLaunchWithNotificationID(Action<string> didFinishLaunch)
-	{
-#if UNITY_IPHONE && !UNITY_EDITOR
-		GrowthPushReceiveIOS receive = GrowthPushReceiveIOS.CreateGO();
-		if(receive != null)
-			receive.didFinishLaunchWithNotificationIDCallback = didFinishLaunch;
-#endif
-	}
-		
 	public static void EasySetApplicationId(int appID, string secret, bool debug)
 	{
 		Debug.Log("_easyGrowthPush_setApplicationId");

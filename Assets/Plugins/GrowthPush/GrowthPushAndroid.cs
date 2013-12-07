@@ -128,57 +128,8 @@ public class GrowthPushAndroid
 		}
 #endif
 	}
-	
-	public void setReceiveHandler(ReceiveHandlerAndroid handler)
-	{
-#if UNITY_ANDROID && !UNITY_EDITOR
-		if( growthPush != null )
-		{
-			growthPush.Call("setReceiveHandler", handler.receiveJava);
-		}
-		else
-		{
-			Debug.LogError( "growthPush is not created.");
-		}
-#endif
-	}
 }
 
-public class ReceiveHandlerAndroid
-{
-#if UNITY_ANDROID
-	public AndroidJavaObject receiveJava = null;	
-	public ReceiveHandlerAndroid(Action<string> callback)
-	{
-		GrowthPusReceiveAndroid behavior =  GrowthPusReceiveAndroid.CreateGO();
-		if(behavior != null)
-			behavior.receiveCallback = callback;
-		receiveJava = new AndroidJavaObject( "com.growthpush.handler.UnityReceiveHandler", GrowthPusReceiveAndroid.ReceiveName );
-	}	
-	
-	public void setCallback(CallbackAndroid inCallback)
-	{
-		if(receiveJava != null)
-		{
-			receiveJava.Call("setCallback", inCallback.callbackJava);
-		}
-	}
-#endif	
-}
-
-public class CallbackAndroid
-{	
-#if UNITY_ANDROID
-	public AndroidJavaObject callbackJava = null;
-	public CallbackAndroid(Action<string> callback)
-	{
-		GrowthPusReceiveAndroid behavior = GrowthPusReceiveAndroid.CreateGO();
-		if(behavior != null)
-			behavior.openCallback = callback;
-		callbackJava = new AndroidJavaObject( "com.growthpush.handler.UnityCallback", GrowthPusReceiveAndroid.ReceiveName );
-	}	
-#endif
-};
 
 
 
