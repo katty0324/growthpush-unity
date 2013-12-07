@@ -72,9 +72,9 @@ BOOL app42RunTimeDidFinishLaunching(id self, SEL _cmd, id application, id launch
         
         NSString *notificationId = [[remoteNotificationDictionary objectForKey:@"growthpush"] objectForKey:@"notificationId"];
 
-    if(listenerGameObject != 0 && notificationId != nil)
-        UnitySendMessage(listenerGameObject, "didFinishLaunchWithNotificationID", [notificationId UTF8String]);    
-    
+        if(listenerGameObject != 0 && notificationId != nil)
+            UnitySendMessage(listenerGameObject, "didFinishLaunchWithNotificationID", [notificationId UTF8String]);
+    }
 	return result;
 }
 
