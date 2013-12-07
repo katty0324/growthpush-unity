@@ -77,7 +77,7 @@ public class GrowthPushIOS {
 	public static void requestDeviceToken(Action<string> didRequestDeviceToken)
 	{
 #if UNITY_IPHONE && !UNITY_EDITOR
-		GrowthPushReceiveIOS receive = GrowthPushReceiveIOS.CreateGO();
+		GrowthPushReceiveIOS receive = GrowthPushReceive.CreateGO() as GrowthPushReceiveIOS;
 		if(receive != null)
 			receive.didRegisterForRemoteNotificationsWithDeviceTokenCallback = didRequestDeviceToken;
 		
