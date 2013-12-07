@@ -8,6 +8,7 @@
 
 #import "App42PushHandlerInternal.h"
 #import <objc/runtime.h>
+#import <GrowthPush/GrowthPush.h>
 
 
 /*
@@ -47,8 +48,7 @@ void app42RunTimeDidBecomActive(id self)
     {
 		[self app42didBecomeActive:self];
 	}
-    if(listenerGameObject != 0)
-        UnitySendMessage(listenerGameObject, "onDidBecomeActive", nil);
+    [GrowthPush trackEvent:@"Launch"];
 }
 
 BOOL app42RunTimeDidFinishLaunching(id self, SEL _cmd, id application, id launchOptions)
@@ -72,8 +72,14 @@ BOOL app42RunTimeDidFinishLaunching(id self, SEL _cmd, id application, id launch
         
         NSString *notificationId = [[remoteNotificationDictionary objectForKey:@"growthpush"] objectForKey:@"notificationId"];
 
-        if(listenerGameObject != 0 && notificationId != nil)
-            UnitySendMessage(listenerGameObject, "didFinishLaunchWithNotificationID", [notificationId UTF8String]);
+        if(notificationId != nil)
+            [GrowthPush trackEvent:[NSString stringWithFormat:@"Launch via push notification %@", notificationId]];
+        else
+            [GrowthPush trackEvent:@"Launch"];
+    }
+    else
+    {
+        [GrowthPush trackEvent:@"Launch"];
     }
 	return result;
 }
