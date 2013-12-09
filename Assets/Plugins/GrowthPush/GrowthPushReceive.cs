@@ -32,11 +32,17 @@ public abstract class GrowthPushReceive : MonoBehaviour
 		return ret;
 	}	
 	
-	public Action<string> launchWithNotificationCallback = null;
-	public void launchWithNotification(string notificationId)
+	public Action<Dictionary<string, object>> launchWithNotificationCallback = null;
+	public void launchWithNotification(string growthpushMsg)
 	{
 		if (launchWithNotificationCallback != null) 
-			launchWithNotificationCallback(notificationId);			
+		{
+			Dictionary<string, object> obj = MiniJSON.Json.Deserialize(growthpushMsg) as Dictionary<string, object>;
+			if(obj != null)
+				launchWithNotificationCallback(obj);		
+			else
+				GrowthPush.trackEvent("Launch");
+		}
 	}
 }
 

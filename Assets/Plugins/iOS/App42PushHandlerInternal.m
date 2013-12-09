@@ -58,13 +58,34 @@ BOOL app42RunTimeDidFinishLaunching(id self, SEL _cmd, id application, id launch
 	NSDictionary *remoteNotificationDictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (remoteNotificationDictionary != nil) {
         
-        NSString *notificationId = [[remoteNotificationDictionary objectForKey:@"growthpush"] objectForKey:@"notificationId"];
-
+        /*NSString *notificationId = [[remoteNotificationDictionary objectForKey:@"growthpush"] objectForKey:@"notificationId"];
+        
         if(notificationId != nil)
             //[GrowthPush trackEvent:[NSString stringWithFormat:@"Launch via push notification %@", notificationId]];
             UnitySendMessage("GrowthPushReceiveIOS", "launchWithNotification", [notificationId UTF8String]);
         else
             [GrowthPush trackEvent:@"Launch"];
+         */
+        NSString *str = @"{";
+        NSString *growthpushMsg = [remoteNotificationDictionary objectForKey:@"growthpush"];
+        if(growthpushMsg != nil)
+        {
+            NSLog(@"growthpushMsg: %@", growthpushMsg);
+            str = [str stringByAppendingString:[NSString stringWithFormat:@"\"growthpush\":%@", growthpushMsg]];
+        }
+        
+        NSString *notification = [remoteNotificationDictionary objectForKey:@"notification"];
+        if(notification != nil)
+        {
+            NSLog(@"notification: %@", notification);
+            if(growthpushMsg != nil)
+                str = [str stringByAppendingString:@","];
+            str = [str stringByAppendingString:[NSString stringWithFormat:@"\"notification\":\"%@\"", notification]];
+        }
+        str = [str stringByAppendingString:@"}"];
+        
+        NSLog(@"str: %@", str);
+        UnitySendMessage("GrowthPushReceiveIOS", "launchWithNotification", [str UTF8String]);
     }
     else
     {

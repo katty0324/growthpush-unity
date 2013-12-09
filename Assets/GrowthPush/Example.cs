@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class Example : MonoBehaviour {
 	
@@ -27,9 +27,25 @@ public class Example : MonoBehaviour {
 			GrowthPush.trackEvent("Launching");
 			GrowthPush.setTag("Tagging");
 			
-			GrowthPush.launchWithNotification(notificationId => {
-				Debug.Log("notificationId " + notificationId);
-				GrowthPush.trackEvent("Launch via push notification " + notificationId);
+			GrowthPush.launchWithNotification(data => {
+				Debug.Log("data " + data);
+								
+				object growthpushObj = null;
+				if(data.TryGetValue("growthpush", out growthpushObj))
+				{
+					object notificationId;
+					if((growthpushObj as Dictionary<string, object>).TryGetValue("notificationId", out notificationId))
+					{
+						Debug.Log("unity notificationId: " + notificationId);
+						GrowthPush.trackEvent("Launch via push notification " + notificationId);
+					}
+					else
+						GrowthPush.trackEvent("Launch");
+				}
+				
+				object notification = null;
+				if(data.TryGetValue("notification", out notification))
+					Debug.Log("notification " + notification);
 			});
 		}
 	}
