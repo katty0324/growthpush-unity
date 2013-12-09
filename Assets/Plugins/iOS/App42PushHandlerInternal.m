@@ -66,6 +66,7 @@ BOOL app42RunTimeDidFinishLaunching(id self, SEL _cmd, id application, id launch
         else
             [GrowthPush trackEvent:@"Launch"];
          */
+        /*
         NSString *str = @"{";
         NSString *growthpushMsg = [remoteNotificationDictionary objectForKey:@"growthpush"];
         if(growthpushMsg != nil)
@@ -84,6 +85,20 @@ BOOL app42RunTimeDidFinishLaunching(id self, SEL _cmd, id application, id launch
         }
         str = [str stringByAppendingString:@"}"];
         
+        NSLog(@"str: %@", str);
+        UnitySendMessage("GrowthPushReceiveIOS", "launchWithNotification", [str UTF8String]);
+         */
+        
+        NSString *str = @"";
+        for (NSString* key in remoteNotificationDictionary)
+        {
+            id value = [remoteNotificationDictionary objectForKey:key];
+            NSLog(@"key: %@ => value: %@", key, value);
+            
+            if([key isEqual:@"aps"])
+                continue;
+            str = [str stringByAppendingString:[NSString stringWithFormat:@"&%@=%@", key, value]];
+        }
         NSLog(@"str: %@", str);
         UnitySendMessage("GrowthPushReceiveIOS", "launchWithNotification", [str UTF8String]);
     }

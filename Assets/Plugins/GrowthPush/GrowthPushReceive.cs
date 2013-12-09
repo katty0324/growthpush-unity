@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public abstract class GrowthPushReceive : MonoBehaviour
 {
@@ -32,13 +33,14 @@ public abstract class GrowthPushReceive : MonoBehaviour
 		return ret;
 	}	
 	
-	public Action<Dictionary<string, object>> launchWithNotificationCallback = null;
-	public void launchWithNotification(string growthpushMsg)
+	public Action<Dictionary<string, string>> launchWithNotificationCallback = null;
+	public void launchWithNotification(string query)
 	{
-		if (launchWithNotificationCallback != null) 
+		Debug.Log("query " + query);
+		if (launchWithNotificationCallback != null && query != null) 
 		{
-			Dictionary<string, object> obj = MiniJSON.Json.Deserialize(growthpushMsg) as Dictionary<string, object>;
-			if(obj != null)
+			Dictionary<string, string> obj = query.Split('&').Select(p => p.Split('=')).ToDictionary(p => p[0], p => p.Length > 1 ? p[1] : null);
+			if(obj != null || obj.Count > 0)
 				launchWithNotificationCallback(obj);		
 			else
 				GrowthPush.trackEvent("Launch");

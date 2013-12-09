@@ -132,7 +132,7 @@ public class GrowthPush
 #endif
 	}
 	
-	public static void launchWithNotification(Action<Dictionary<string, object>> callback)
+	public static void launchWithNotification(Action<Dictionary<string, string>> callback)
 	{
 		GrowthPushReceive receive = null;
 #if UNITY_IPHONE

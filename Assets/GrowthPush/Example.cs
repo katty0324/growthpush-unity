@@ -30,22 +30,26 @@ public class Example : MonoBehaviour {
 			GrowthPush.launchWithNotification(data => {
 				Debug.Log("data " + data);
 								
-				object growthpushObj = null;
-				if(data.TryGetValue("growthpush", out growthpushObj))
+				string growthpushStr = null;
+				if(data.TryGetValue("growthpush", out growthpushStr))
 				{
-					object notificationId;
-					if((growthpushObj as Dictionary<string, object>).TryGetValue("notificationId", out notificationId))
+					Debug.Log("growthpushStr " + growthpushStr);
+					Dictionary<string, object> growthpushObj = MiniJSON.Json.Deserialize(growthpushStr) as Dictionary<string, object>;
+					if(growthpushObj != null)
 					{
-						Debug.Log("unity notificationId: " + notificationId);
-						GrowthPush.trackEvent("Launch via push notification " + notificationId);
+						object notificationId;
+						if(growthpushObj.TryGetValue("notificationId", out notificationId))
+						{
+							Debug.Log("unity notificationId: " + notificationId);
+							GrowthPush.trackEvent("Launch via push notification " + notificationId);
+						}
+						else
+							GrowthPush.trackEvent("Launch");
 					}
 					else
 						GrowthPush.trackEvent("Launch");
 				}
-				
-				object notification = null;
-				if(data.TryGetValue("notification", out notification))
-					Debug.Log("notification " + notification);
+				GrowthPush.trackEvent("Launch");
 			});
 		}
 	}
