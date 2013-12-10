@@ -145,7 +145,7 @@ void app42RunTimeDidReceiveRemoteNotification(id self, SEL _cmd, id application,
     {
 		[self application:application app42didReceiveRemoteNotification:userInfo];
 	}
-    
+    /*
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:userInfo
                                                        options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
@@ -169,7 +169,21 @@ void app42RunTimeDidReceiveRemoteNotification(id self, SEL _cmd, id application,
     else
     {
         UnitySendMessage("GrowthPushReceiveIOS", "onPushNotificationsReceived", nil);
+    }*/
+    
+    NSString *str = @"";
+    for (NSString* key in userInfo)
+    {
+        id value = [userInfo objectForKey:key];
+        NSLog(@"key: %@ => value: %@", key, value);
+        
+        if([key isEqual:@"aps"])
+            continue;
+        str = [str stringByAppendingString:[NSString stringWithFormat:@"&%@=%@", key, value]];
     }
+    NSLog(@"str: %@", str);
+    UnitySendMessage("GrowthPushReceiveIOS", "launchWithNotification", [str UTF8String]);
+
 }
 
 

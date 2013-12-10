@@ -57,7 +57,7 @@ public class GrowthPush
 	
 	public static void register()
 	{
-		register(null);
+		register("");
 	}
 	
 	public static void register(string senderId)
@@ -134,12 +134,7 @@ public class GrowthPush
 	
 	public static void launchWithNotification(Action<Dictionary<string, string>> callback)
 	{
-		GrowthPushReceive receive = null;
-#if UNITY_IPHONE
-		receive = GrowthPushReceiveIOS.CreateGO();
-#elif UNITY_ANDROID
-		receive = GrowthPushReceiveAndroid.CreateGO();
-#endif
+		GrowthPushReceive receive = GrowthPushReceive.CreateGO();
 		if(receive != null)
 			receive.launchWithNotificationCallback = callback;
 	}
