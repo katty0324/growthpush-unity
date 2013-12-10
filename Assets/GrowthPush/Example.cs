@@ -44,11 +44,12 @@ public class Example : MonoBehaviour {
 						}
 						else
 							GrowthPush.trackEvent("Launch");
-						}
-						else
+					}
+					else
 						GrowthPush.trackEvent("Launch");
 				}
-				GrowthPush.trackEvent("Launch");
+				else
+					GrowthPush.trackEvent("Launch");
 			});
 		}
 	}
