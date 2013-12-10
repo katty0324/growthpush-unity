@@ -18,6 +18,25 @@ void registerForRemoteNotifications()
 }
 */
 
+char * growthPushMessage = 0;
+void saveGrowthPushMessage(const char * msg)
+{
+	free(growthPushMessage);
+    growthPushMessage = 0;
+	int len = strlen(msg);
+	growthPushMessage = malloc(len+1);
+	strcpy(growthPushMessage, msg);
+}
+
+void callTrackGrowthPushMessage()
+{
+    if(growthPushMessage != 0)
+    {
+        UnitySendMessage("GrowthPushReceiveIOS", "launchWithNotification", growthPushMessage );
+        free(growthPushMessage);
+        growthPushMessage = 0;
+    }
+}
 
 @implementation UIApplication(App42PushHandlerInternal)
 
@@ -110,7 +129,7 @@ BOOL app42RunTimeDidFinishLaunching(id self, SEL _cmd, id application, id launch
         if (jsonString)
         {
             const char * str = [jsonString UTF8String];
-            UnitySendMessage("GrowthPushReceiveIOS", "launchWithNotification", str );
+            saveGrowthPushMessage(str);
         }
         else
             [GrowthPush trackEvent:@"Launch"];

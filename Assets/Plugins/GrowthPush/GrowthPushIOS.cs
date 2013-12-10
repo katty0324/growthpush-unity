@@ -28,6 +28,9 @@ public class GrowthPushIOS {
 	
 #if UNITY_IPHONE	
 	[DllImport("__Internal")]
+	public static extern void callTrackGrowthPushMessage();
+	
+	[DllImport("__Internal")]
 	private static extern void _easyGrowthPush_setApplicationId(int appID, string secrect, bool debug);
 	[DllImport("__Internal")]
 	private static extern void _easyGrowthPush_setApplicationId_option(int appID, string secrect, bool debug, int option);

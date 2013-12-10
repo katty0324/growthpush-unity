@@ -137,5 +137,8 @@ public class GrowthPush
 		GrowthPushReceive receive = GrowthPushReceive.CreateGO();
 		if(receive != null)
 			receive.launchWithNotificationCallback = callback;
+#if UNITY_IPHONE
+		GrowthPushIOS.callTrackGrowthPushMessage();
+#endif
 	}
 }
