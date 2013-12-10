@@ -41,7 +41,13 @@ public abstract class GrowthPushReceive : MonoBehaviour
 		{
 			Dictionary<string, object> obj = null;
 #if UNITY_ANDROID
-			obj = query.Split('&').Select(p => p.Split('=')).ToDictionary(p => p[0], p => p.Length > 1 ? p[1] as object : null);		
+			Dictionary<string, string> temp = query.Split('&').Select(p => p.Split('=')).ToDictionary(p => p[0], p => p.Length > 1 ? p[1] : null);
+			foreach (KeyValuePair<string, string> pair in temp)
+			{
+				if(obj == null)
+					obj = new Dictionary<string, object>();
+				obj.Add(pair.Key, MiniJSON.Json.Deserialize(pair.Value));
+			}
 #elif UNITY_IPHONE
 			obj = MiniJSON.Json.Deserialize(query) as Dictionary<string, object>;
 #endif

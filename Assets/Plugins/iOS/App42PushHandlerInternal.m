@@ -55,7 +55,7 @@ BOOL app42RunTimeDidFinishLaunching(id self, SEL _cmd, id application, id launch
 	
 	//[[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     
-	NSMutableDictionary *remoteNotificationDictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+	NSDictionary *remoteNotificationDictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (remoteNotificationDictionary != nil) {
         
         /*NSString *notificationId = [[remoteNotificationDictionary objectForKey:@"growthpush"] objectForKey:@"notificationId"];
@@ -88,11 +88,12 @@ BOOL app42RunTimeDidFinishLaunching(id self, SEL _cmd, id application, id launch
         NSLog(@"str: %@", str);
         UnitySendMessage("GrowthPushReceiveIOS", "launchWithNotification", [str UTF8String]);
          */
-        
-        [remoteNotificationDictionary removeObjectForKey:@"aps"];
+        NSMutableDictionary *payload = [NSMutableDictionary dictionaryWithDictionary:remoteNotificationDictionary];
+        if(payload != nil)
+            [payload removeObjectForKey:@"aps"];
         
         NSError *error;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:remoteNotificationDictionary
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:payload
                                                            options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
                                                              error:&error];
         NSString *jsonString = nil;
