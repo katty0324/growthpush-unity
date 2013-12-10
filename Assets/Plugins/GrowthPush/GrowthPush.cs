@@ -132,7 +132,7 @@ public class GrowthPush
 #endif
 	}
 	
-	public static void launchWithNotification(Action<Dictionary<string, string>> callback)
+	public static void launchWithNotification(Action<Dictionary<string, object>> callback)
 	{
 		GrowthPushReceive receive = GrowthPushReceive.CreateGO();
 		if(receive != null)

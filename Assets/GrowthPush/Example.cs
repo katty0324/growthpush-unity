@@ -30,13 +30,12 @@ public class Example : MonoBehaviour {
 			GrowthPush.launchWithNotification(data => {
 				Debug.Log("data " + data);
 								
-				string growthpushStr = null;
-				if(data.TryGetValue("growthpush", out growthpushStr))
+				object growthpushMsg = null;
+				if(data.TryGetValue("growthpush", out growthpushMsg))
 				{
-					Debug.Log("growthpushStr " + growthpushStr);
-					Dictionary<string, object> growthpushObj = MiniJSON.Json.Deserialize(growthpushStr) as Dictionary<string, object>;
+					Dictionary<string, object> growthpushObj = MiniJSON.Json.Deserialize(growthpushMsg as string) as Dictionary<string, object>;
 					if(growthpushObj != null)
-					{
+					{						
 						object notificationId;
 						if(growthpushObj.TryGetValue("notificationId", out notificationId))
 						{
@@ -45,8 +44,8 @@ public class Example : MonoBehaviour {
 						}
 						else
 							GrowthPush.trackEvent("Launch");
-					}
-					else
+						}
+						else
 						GrowthPush.trackEvent("Launch");
 				}
 				GrowthPush.trackEvent("Launch");

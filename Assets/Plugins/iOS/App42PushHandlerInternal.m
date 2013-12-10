@@ -55,7 +55,7 @@ BOOL app42RunTimeDidFinishLaunching(id self, SEL _cmd, id application, id launch
 	
 	//[[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     
-	NSDictionary *remoteNotificationDictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+	NSMutableDictionary *remoteNotificationDictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (remoteNotificationDictionary != nil) {
         
         /*NSString *notificationId = [[remoteNotificationDictionary objectForKey:@"growthpush"] objectForKey:@"notificationId"];
@@ -89,18 +89,30 @@ BOOL app42RunTimeDidFinishLaunching(id self, SEL _cmd, id application, id launch
         UnitySendMessage("GrowthPushReceiveIOS", "launchWithNotification", [str UTF8String]);
          */
         
-        NSString *str = @"";
-        for (NSString* key in remoteNotificationDictionary)
+        [remoteNotificationDictionary removeObjectForKey:@"aps"];
+        
+        NSError *error;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:remoteNotificationDictionary
+                                                           options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                             error:&error];
+        NSString *jsonString = nil;
+        if (! jsonData)
         {
-            id value = [remoteNotificationDictionary objectForKey:key];
-            NSLog(@"key: %@ => value: %@", key, value);
-            
-            if([key isEqual:@"aps"])
-                continue;
-            str = [str stringByAppendingString:[NSString stringWithFormat:@"&%@=%@", key, value]];
+            NSLog(@"Got an error: %@", error);
         }
-        NSLog(@"str: %@", str);
-        UnitySendMessage("GrowthPushReceiveIOS", "launchWithNotification", [str UTF8String]);
+        else
+        {
+            jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            NSLog(@"jsonString= %@",jsonString);
+        }
+        
+        if (jsonString)
+        {
+            const char * str = [jsonString UTF8String];
+            UnitySendMessage("GrowthPushReceiveIOS", "launchWithNotification", str );
+        }
+        else
+            [GrowthPush trackEvent:@"Launch"];
     }
     else
     {
@@ -145,9 +157,13 @@ void app42RunTimeDidReceiveRemoteNotification(id self, SEL _cmd, id application,
     {
 		[self application:application app42didReceiveRemoteNotification:userInfo];
 	}
-    /*
+    
+    NSMutableDictionary *payload = [NSMutableDictionary dictionaryWithDictionary:userInfo];
+    if(payload != nil)
+        [payload removeObjectForKey:@"aps"];
+    
     NSError *error;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:userInfo
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:payload
                                                        options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
                                                          error:&error];
     NSString *jsonString = nil;
@@ -164,26 +180,8 @@ void app42RunTimeDidReceiveRemoteNotification(id self, SEL _cmd, id application,
     if (jsonString)
     {
         const char * str = [jsonString UTF8String];
-        UnitySendMessage("GrowthPushReceiveIOS", "onPushNotificationsReceived", str);
+        UnitySendMessage("GrowthPushReceiveIOS", "launchWithNotification", str );
     }
-    else
-    {
-        UnitySendMessage("GrowthPushReceiveIOS", "onPushNotificationsReceived", nil);
-    }*/
-    
-    NSString *str = @"";
-    for (NSString* key in userInfo)
-    {
-        id value = [userInfo objectForKey:key];
-        NSLog(@"key: %@ => value: %@", key, value);
-        
-        if([key isEqual:@"aps"])
-            continue;
-        str = [str stringByAppendingString:[NSString stringWithFormat:@"&%@=%@", key, value]];
-    }
-    NSLog(@"str: %@", str);
-    UnitySendMessage("GrowthPushReceiveIOS", "launchWithNotification", [str UTF8String]);
-
 }
 
 

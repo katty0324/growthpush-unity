@@ -33,13 +33,18 @@ public abstract class GrowthPushReceive : MonoBehaviour
 		return ret;
 	}	
 	
-	public Action<Dictionary<string, string>> launchWithNotificationCallback = null;
+	public Action<Dictionary<string, object>> launchWithNotificationCallback = null;
 	public void launchWithNotification(string query)
 	{
 		Debug.Log("query " + query);
 		if (launchWithNotificationCallback != null && query != null) 
 		{
-			Dictionary<string, string> obj = query.Split('&').Select(p => p.Split('=')).ToDictionary(p => p[0], p => p.Length > 1 ? p[1] : null);
+			Dictionary<string, object> obj = null;
+#if UNITY_ANDROID
+			obj = query.Split('&').Select(p => p.Split('=')).ToDictionary(p => p[0], p => p.Length > 1 ? p[1] : null);		
+#elif UNITY_IPHONE
+			obj = MiniJSON.Json.Deserialize(query) as Dictionary<string, object>;
+#endif
 			if(obj != null || obj.Count > 0)
 				launchWithNotificationCallback(obj);		
 			else
