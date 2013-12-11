@@ -128,6 +128,18 @@ public class GrowthPushAndroid
 		}
 #endif
 	}
+	
+	public void callTrackGrowthPushMessage()
+	{
+#if UNITY_ANDROID && !UNITY_EDITOR
+		using(AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+		{
+    		AndroidJavaObject activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+			if(activity != null)
+				activity.CallStatic("callTrackGrowthPushMessage");
+		}
+#endif
+	}
 }
 
 

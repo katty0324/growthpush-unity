@@ -139,6 +139,8 @@ public class GrowthPush
 			receive.launchWithNotificationCallback = callback;
 #if UNITY_IPHONE
 		GrowthPushIOS.callTrackGrowthPushMessage();
+#elif UNITY_ANDROID
+		GrowthPushAndroid.getInstance().callTrackGrowthPushMessage();
 #endif
 	}
 }
