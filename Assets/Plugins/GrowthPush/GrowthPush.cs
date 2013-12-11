@@ -8,7 +8,7 @@ public class GrowthPush
 {
 	public enum Environment
 	{
-		unknow = 0,
+		unknown = 0,
 		development,
 		production
 	};
@@ -17,7 +17,7 @@ public class GrowthPush
 	{
 		None = GrowthPushIOS.EGPOption.EGPOptionNone,
 		TrackLaunch = GrowthPushIOS.EGPOption.EGPOptionTrackLaunch,
-		TagDevie = GrowthPushIOS.EGPOption.EGPOptionTagDevie,
+		TagDevice = GrowthPushIOS.EGPOption.EGPOptionTagDevice,
 		TagOS = GrowthPushIOS.EGPOption.EGPOptionTagOS,
 		TagLanguage = GrowthPushIOS.EGPOption.EGPOptionTagLanguage,
 		TagTimeZone = GrowthPushIOS.EGPOption.EGPOptionTagTimeZone,
@@ -28,30 +28,30 @@ public class GrowthPush
 		All = GrowthPushIOS.EGPOption.EGPOptionAll,
 	};
 	
-	public static void initialize(int applicationId, string secrect)
+	public static void initialize(int applicationId, string secret)
 	{
-		initialize(applicationId, secrect, Environment.development);
+		initialize(applicationId, secret, Environment.production);
 	}
 	
-	public static void initialize(int applicationId, string secrect, Environment environment)
+	public static void initialize(int applicationId, string secret, Environment environment)
 	{
-		initialize(applicationId, secrect, environment, Option.All);
+		initialize(applicationId, secret, environment, Option.All);
 	}
 	
-	public static void initialize(int applicationId, string secrect, Environment environment, Option option)
+	public static void initialize(int applicationId, string secret, Environment environment, Option option)
 	{
-		initialize(applicationId, secrect, environment, Option.All, true);
+		initialize(applicationId, secret, environment, Option.All, false);
 	}
 	
-	public static void initialize(int applicationId, string secrect, Environment evironment, Option option, bool debug)
+	public static void initialize(int applicationId, string secret, Environment environment, Option option, bool debug)
 	{
 #if UNITY_ANDROID
-		GrowthPushAndroid.Environment evAnd = GrowthPushAndroid.Environment.development;
-		if(evironment == Environment.production)
-			evAnd = GrowthPushAndroid.Environment.production;		
-		GrowthPushAndroid.getInstance().initialize(applicationId, secrect, evAnd, debug); 
+		GrowthPushAndroid.Environment environmentAndroid = GrowthPushAndroid.Environment.development;
+		if(environment == Environment.production)
+			environmentAndroid = GrowthPushAndroid.Environment.production;		
+		GrowthPushAndroid.getInstance().initialize(applicationId, secret, environmentAndroid, debug); 
 #elif UNITY_IPHONE
-		GrowthPushIOS.setApplicationId(applicationId, secrect, (GrowthPushIOS.GPEnvironment)evironment, debug);
+		GrowthPushIOS.setApplicationId(applicationId, secret, (GrowthPushIOS.GPEnvironment)environment, debug);
 #endif
 	}
 	

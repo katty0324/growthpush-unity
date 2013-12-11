@@ -9,28 +9,28 @@ public abstract class GrowthPushReceive : MonoBehaviour
 	private static GameObject GO = null;
 	public static GrowthPushReceive CreateGO()
 	{
-		GrowthPushReceive ret = null;
+		GrowthPushReceive receive = null;
 		if(GO == null)
 		{
 					
 #if UNITY_IPHONE
 			GO = new GameObject ("GrowthPushReceiveIOS");
-			ret = GO.AddComponent<GrowthPushReceiveIOS>();
+			receive = GO.AddComponent<GrowthPushReceiveIOS>();
 #elif UNITY_ANDROID
 			GO = new GameObject ("GrowthPushReceiveAndroid");
-			ret = GO.AddComponent<GrowthPushReceiveAndroid>();
+			receive = GO.AddComponent<GrowthPushReceiveAndroid>();
 #endif
 			GameObject.DontDestroyOnLoad(GO);
 		}
 		else
 		{
 #if UNITY_IPHONE
-			ret = GO.GetComponent<GrowthPushReceiveIOS>();
+			receive = GO.GetComponent<GrowthPushReceiveIOS>();
 #elif UNITY_ANDROID
-			ret = GO.GetComponent<GrowthPushReceiveAndroid>();
+			receive = GO.GetComponent<GrowthPushReceiveAndroid>();
 #endif
 		}
-		return ret;
+		return receive;
 	}	
 	
 	public Action<Dictionary<string, object>> launchWithNotificationCallback = null;

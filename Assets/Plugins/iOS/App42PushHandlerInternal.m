@@ -11,13 +11,6 @@
 #import <GrowthPush/GrowthPush.h>
 
 
-/*
-void registerForRemoteNotifications()
-{
-	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-}
-*/
-
 char * growthPushMessage = 0;
 void saveGrowthPushMessage(const char * msg)
 {
@@ -42,11 +35,7 @@ void callTrackGrowthPushMessage()
 
 +(void)load
 {
-    NSLog(@"%s",__FUNCTION__);
     method_exchangeImplementations(class_getInstanceMethod(self, @selector(setDelegate:)), class_getInstanceMethod(self, @selector(setApp42Delegate:)));
-	
-	UIApplication *app = [UIApplication sharedApplication];
-	NSLog(@"Initializing application: %@, %@", app, app.delegate);
 }
 
 void app42RunTimeDidBecomActive(id self)
@@ -71,66 +60,23 @@ BOOL app42RunTimeDidFinishLaunching(id self, SEL _cmd, id application, id launch
 		[self applicationDidFinishLaunching:application];
 		result = YES;
 	}
-	
-	//[[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     
 	NSDictionary *remoteNotificationDictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (remoteNotificationDictionary != nil) {
-        
-        /*NSString *notificationId = [[remoteNotificationDictionary objectForKey:@"growthpush"] objectForKey:@"notificationId"];
-        
-        if(notificationId != nil)
-            //[GrowthPush trackEvent:[NSString stringWithFormat:@"Launch via push notification %@", notificationId]];
-            UnitySendMessage("GrowthPushReceiveIOS", "launchWithNotification", [notificationId UTF8String]);
-        else
-            [GrowthPush trackEvent:@"Launch"];
-         */
-        /*
-        NSString *str = @"{";
-        NSString *growthpushMsg = [remoteNotificationDictionary objectForKey:@"growthpush"];
-        if(growthpushMsg != nil)
-        {
-            NSLog(@"growthpushMsg: %@", growthpushMsg);
-            str = [str stringByAppendingString:[NSString stringWithFormat:@"\"growthpush\":%@", growthpushMsg]];
-        }
-        
-        NSString *notification = [remoteNotificationDictionary objectForKey:@"notification"];
-        if(notification != nil)
-        {
-            NSLog(@"notification: %@", notification);
-            if(growthpushMsg != nil)
-                str = [str stringByAppendingString:@","];
-            str = [str stringByAppendingString:[NSString stringWithFormat:@"\"notification\":\"%@\"", notification]];
-        }
-        str = [str stringByAppendingString:@"}"];
-        
-        NSLog(@"str: %@", str);
-        UnitySendMessage("GrowthPushReceiveIOS", "launchWithNotification", [str UTF8String]);
-         */
         NSMutableDictionary *payload = [NSMutableDictionary dictionaryWithDictionary:remoteNotificationDictionary];
         if(payload != nil)
             [payload removeObjectForKey:@"aps"];
         
         NSError *error;
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:payload
-                                                           options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                           options:NSJSONWritingPrettyPrinted
                                                              error:&error];
         NSString *jsonString = nil;
-        if (! jsonData)
-        {
-            NSLog(@"Got an error: %@", error);
-        }
-        else
-        {
+        if(jsonData)
             jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-            NSLog(@"jsonString= %@",jsonString);
-        }
         
         if (jsonString)
-        {
-            const char * str = [jsonString UTF8String];
-            saveGrowthPushMessage(str);
-        }
+            saveGrowthPushMessage([jsonString UTF8String]);
         else
             [GrowthPush trackEvent:@"Launch"];
     }
@@ -148,13 +94,6 @@ void app42RunTimeDidRegisterForRemoteNotificationsWithDeviceToken(id self, SEL _
     {
 		[self application:application app42didRegisterForRemoteNotificationsWithDeviceToken:devToken];
 	}
-	// Prepare the Device Token for Registration (remove spaces and < >)
-	/*NSString *deviceToken = [[[[devToken description]
-                            stringByReplacingOccurrencesOfString:@"<"withString:@""]
-                           stringByReplacingOccurrencesOfString:@">" withString:@""]
-                          stringByReplacingOccurrencesOfString: @" " withString: @""];
-    NSLog(@"deviceToken=%@",deviceToken);
-     */
     UnitySendMessage("GrowthPushReceiveIOS", "onDidRegisterForRemoteNotificationsWithDeviceToken", [[devToken description] UTF8String]);
 
 }
@@ -168,7 +107,6 @@ void app42RunTimeDidFailToRegisterForRemoteNotificationsWithError(id self, SEL _
 	NSString *errorString = [error description];
     const char * str = [errorString UTF8String];
     UnitySendMessage("GrowthPushReceiveIOS", "onDidFailToRegisterForRemoteNotificationsWithError", str);
-	NSLog(@"Error registering for push notifications. Error: %@", error);
 }
 
 void app42RunTimeDidReceiveRemoteNotification(id self, SEL _cmd, id application, id userInfo)
@@ -184,24 +122,14 @@ void app42RunTimeDidReceiveRemoteNotification(id self, SEL _cmd, id application,
     
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:payload
-                                                       options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                       options:NSJSONWritingPrettyPrinted
                                                          error:&error];
     NSString *jsonString = nil;
-    if (! jsonData)
-    {
-        NSLog(@"Got an error: %@", error);
-    }
-    else
-    {
+    if(jsonData)
         jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        NSLog(@"jsonString= %@",jsonString);
-    }
     
     if (jsonString)
-    {
-        const char * str = [jsonString UTF8String];
-        UnitySendMessage("GrowthPushReceiveIOS", "launchWithNotification", str );
-    }
+        UnitySendMessage("GrowthPushReceiveIOS", "launchWithNotification", [jsonString UTF8String] );
 }
 
 

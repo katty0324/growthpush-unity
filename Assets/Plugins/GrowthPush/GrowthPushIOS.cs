@@ -8,14 +8,14 @@ public class GrowthPushIOS {
 	{
 		EGPOptionNone = 0,
 		EGPOptionTrackLaunch = 1 << 0,
-		EGPOptionTagDevie = 1 << 1,
+		EGPOptionTagDevice = 1 << 1,
 		EGPOptionTagOS = 1 << 2,
 		EGPOptionTagLanguage = 1 << 3,
 		EGPOptionTagTimeZone = 1 << 4,
 		EGPOptionTagVersion = 1 << 5,
 		EGPOptionTagBuild = 1 << 6,
 		EGPOptionTrackAll = EGPOptionTrackLaunch,
-		EGPOptionTagAll = EGPOptionTagDevie | EGPOptionTagOS | EGPOptionTagLanguage | EGPOptionTagTimeZone | EGPOptionTagVersion | EGPOptionTagBuild,
+		EGPOptionTagAll = EGPOptionTagDevice | EGPOptionTagOS | EGPOptionTagLanguage | EGPOptionTagTimeZone | EGPOptionTagVersion | EGPOptionTagBuild,
 		EGPOptionAll = EGPOptionTrackAll | EGPOptionTagAll,
 	};
 	
@@ -63,17 +63,17 @@ public class GrowthPushIOS {
 	private static extern void _growthPush_clearBadge();
 #endif
 	
-	public static void setApplicationId(int appID, string secrect, GPEnvironment environment, bool debug)
+	public static void setApplicationId(int applicationID, string secrect, GPEnvironment environment, bool debug)
 	{
 #if UNITY_IPHONE && !UNITY_EDITOR
-		_growthPush_setApplicationId(appID, secrect, (int)environment, debug, (int)EGPOption.EGPOptionAll);
+		_growthPush_setApplicationId(applicationID, secrect, (int)environment, debug, (int)EGPOption.EGPOptionAll);
 #endif
 	}
 	
-	public static void setApplicationId(int appID, string secrect, GPEnvironment environment, bool debug, EGPOption option)
+	public static void setApplicationId(int applicationID, string secrect, GPEnvironment environment, bool debug, EGPOption option)
 	{
 #if UNITY_IPHONE && !UNITY_EDITOR
-		_growthPush_setApplicationId(appID, secrect, (int)environment, debug, (int)option);
+		_growthPush_setApplicationId(applicationID, secrect, (int)environment, debug, (int)option);
 #endif
 	}
 	
