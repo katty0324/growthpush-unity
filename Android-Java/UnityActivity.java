@@ -1,6 +1,4 @@
 package com.growthpush;
-//import org.json.JSONException;
-//import org.json.JSONObject;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -50,34 +48,7 @@ public class UnityActivity extends UnityPlayerActivity {
 		        	continue;
 				str += String.format("&%s=%s", key, value);
 			}
-			
-			/*
-			String str = "{";
-			String notification = bundle.getString("notification", null);
-			Log.d("unity", String.format("Native notification: %s", notification));
-			if(notification != null)
-				str += String.format("\"notification\":\"%s\"", notification);					
-			String growthpush = bundle.getString("growthpush", null);
-			Log.d("unity", String.format("Native growthpush %s", growthpush));
-			if(growthpush != null)
-			{
-				if(notification != null)
-					str += ",";
-				str += String.format("\"growthpush\":%s", growthpush);		
-			}
-			str += "}";
-			UnityPlayer.UnitySendMessage("GrowthPushReceiveAndroid", "launchWithNotification", str);
-			*/				        
-			/*
-			if (additionalFieldJson != null) {
-				try {
-					JSONObject additionalField = new JSONObject(additionalFieldJson);
-					if (additionalField.has("notificationId")) {
-						notificationId = additionalField.getInt("notificationId");
-					}
-				} catch (JSONException e) {
-				}
-			}*/
+            
 		}
 		
 		return str;

@@ -137,19 +137,15 @@ void app42RunTimeDidReceiveRemoteNotification(id self, SEL _cmd, id application,
 static void exchangeMethodImplementations(Class class, SEL oldMethod, SEL newMethod, IMP impl, const char * signature)
 {
 	Method method = nil;
-    //Check whether method exists in the class
 	method = class_getInstanceMethod(class, oldMethod);
 	
 	if (method)
     {
-		//if method exists add a new method 
 		class_addMethod(class, newMethod, impl, signature);
-        //and then exchange with original method implementation
 		method_exchangeImplementations(class_getInstanceMethod(class, oldMethod), class_getInstanceMethod(class, newMethod));
 	}
     else
     {
-		//if method does not exist, simply add as orignal method
 		class_addMethod(class, oldMethod, impl, signature);
 	}
 }
