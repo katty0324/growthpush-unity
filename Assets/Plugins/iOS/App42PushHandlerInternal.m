@@ -44,7 +44,6 @@ void app42RunTimeDidBecomActive(id self)
     {
 		[self app42didBecomeActive:self];
 	}
-    [GrowthPush trackEvent:@"Launch"];
 }
 
 BOOL app42RunTimeDidFinishLaunching(id self, SEL _cmd, id application, id launchOptions)
