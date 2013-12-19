@@ -63,32 +63,32 @@ public class GrowthPushIOS {
 	private static extern void _growthPush_clearBadge();
 #endif
 	
-	public static void setApplicationId(int applicationID, string secrect, GPEnvironment environment, bool debug)
+	public static void SetApplicationId(int applicationID, string secrect, GPEnvironment environment, bool debug)
 	{
 #if UNITY_IPHONE && !UNITY_EDITOR
 		_growthPush_setApplicationId(applicationID, secrect, (int)environment, debug, (int)EGPOption.EGPOptionAll);
 #endif
 	}
 	
-	public static void setApplicationId(int applicationID, string secrect, GPEnvironment environment, bool debug, EGPOption option)
+	public static void SetApplicationId(int applicationID, string secrect, GPEnvironment environment, bool debug, EGPOption option)
 	{
 #if UNITY_IPHONE && !UNITY_EDITOR
 		_growthPush_setApplicationId(applicationID, secrect, (int)environment, debug, (int)option);
 #endif
 	}
 	
-	public static void requestDeviceToken(Action<string> didRequestDeviceToken)
+	public static void RequestDeviceToken(Action<string> didRequestDeviceToken)
 	{
 #if UNITY_IPHONE && !UNITY_EDITOR
 		GrowthPushReceiveIOS receive = GrowthPushReceive.CreateGO() as GrowthPushReceiveIOS;
 		if(receive != null)
-			receive.didRegisterForRemoteNotificationsWithDeviceTokenCallback = didRequestDeviceToken;
+			receive.DidRegisterForRemoteNotificationsWithDeviceTokenCallback = didRequestDeviceToken;
 		
 		_growthPush_requestDeviceToken();
 #endif
 	}
 	
-	public static void setDeviceToken(string deviceToken)
+	public static void SetDeviceToken(string deviceToken)
 	{
 #if UNITY_IPHONE && !UNITY_EDITOR
 		_growthPush_setDeviceToken(deviceToken);
@@ -96,42 +96,42 @@ public class GrowthPushIOS {
 	}
 	
 	
-	public static void trackEvent(string name)
+	public static void TrackEvent(string name)
 	{
 #if UNITY_IPHONE && !UNITY_EDITOR
 		_growthPush_trackEvent(name);
 #endif
 	}
 	
-	public static void trackEvent(string name, string val)
+	public static void TrackEvent(string name, string val)
 	{
 #if UNITY_IPHONE && !UNITY_EDITOR
 		_growthPush_trackEvent_value(name, val);
 #endif
 	}
 	
-	public static void setTag(string name)
+	public static void SetTag(string name)
 	{
 #if UNITY_IPHONE && !UNITY_EDITOR
 		_growthPush_setTag(name);
 #endif
 	}
 	
-	public static void setTag(string name, string val)
+	public static void SetTag(string name, string val)
 	{
 #if UNITY_IPHONE && !UNITY_EDITOR
 		_growthPush_setTag_value(name, val);
 #endif
 	}
 	
-	public static void setDeviceTags()
+	public static void SetDeviceTags()
 	{
 #if UNITY_IPHONE && !UNITY_EDITOR
 		_growthPush_setDeviceTags();
 #endif
 	}
 	
-	public static void clearBadge()
+	public static void ClearBadge()
 	{
 #if UNITY_IPHONE && !UNITY_EDITOR
 		_growthPush_clearBadge();

@@ -15,7 +15,10 @@ import com.unity3d.player.UnityPlayerActivity;
 @SuppressLint("NewApi")
 public class UnityActivity extends UnityPlayerActivity {
 	
-	private static String growthPushMessage = null;	
+	private static String growthPushMessage = null;
+    
+	private boolean started = false;
+    
 	public static void saveGrowthPushMessage(String msg)
 	{
 		growthPushMessage = msg;
@@ -25,7 +28,7 @@ public class UnityActivity extends UnityPlayerActivity {
 	{
 		if(growthPushMessage != null)
 		{
-			UnityPlayer.UnitySendMessage("GrowthPushReceiveAndroid", "launchWithNotification", growthPushMessage);
+			UnityPlayer.UnitySendMessage("GrowthPushReceiveAndroid", "LaunchWithNotification", growthPushMessage);
 			growthPushMessage = null;
 		}
 	}
@@ -53,7 +56,6 @@ public class UnityActivity extends UnityPlayerActivity {
 		
 		return str;
 	}
-	private boolean started = false;
 	
 	
 	@Override
@@ -79,12 +81,9 @@ public class UnityActivity extends UnityPlayerActivity {
 				String str = UnityActivity.parsePushGrowthPushMessage(intent);
 				if(str != null)
 				{
-					UnityPlayer.UnitySendMessage("GrowthPushReceiveAndroid", "launchWithNotification", str);
+					UnityPlayer.UnitySendMessage("GrowthPushReceiveAndroid", "LaunchWithNotification", str);
 				}
-				else
-				{
-					GrowthPush.getInstance().trackEvent("Launch");
-				}
+                
 			}
 
 		});

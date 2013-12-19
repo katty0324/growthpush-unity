@@ -7,13 +7,13 @@ public class GrowthPushAndroid
 {
 	public enum Environment 
 	{
-		production, 
-		development
+		Production, 
+		Development
 	};
 	
 	private static GrowthPushAndroid instance = null;	
 	
-	public static GrowthPushAndroid getInstance() 
+	public static GrowthPushAndroid GetInstance() 
 	{
 		if(instance == null)
 			instance = new GrowthPushAndroid();
@@ -28,28 +28,28 @@ public class GrowthPushAndroid
 #if UNITY_ANDROID && !UNITY_EDITOR
 		using(AndroidJavaClass gpclass = new AndroidJavaClass( "com.growthpush.GrowthPush" ))
 		{
-			growthPush = gpclass.CallStatic<AndroidJavaObject>("getInstance");
+			growthPush = gpclass.CallStatic<AndroidJavaObject>("getInstance"); 
 		}
 #endif
 	}
 
-	public GrowthPushAndroid initialize(int applicationId, string secret) 
+	public GrowthPushAndroid Initialize(int applicationId, string secret) 
 	{
-		return initialize(applicationId, secret, Environment.production, false);
+		return Initialize(applicationId, secret, Environment.Production, false);
 	}
 
-	public GrowthPushAndroid initialize(int applicationId, string secret, Environment environment) 
+	public GrowthPushAndroid Initialize(int applicationId, string secret, Environment environment) 
 	{
-		return initialize(applicationId, secret, environment, false);
+		return Initialize(applicationId, secret, environment, false);
 	}
 
-	public GrowthPushAndroid initialize(int applicationId, string secret, Environment environment, bool debug) 
+	public GrowthPushAndroid Initialize(int applicationId, string secret, Environment environment, bool debug) 
 	{		
 #if UNITY_ANDROID && !UNITY_EDITOR
 		if( growthPush != null )
 		{
 			AndroidJavaClass enviClassJava = new AndroidJavaClass("com.growthpush.model.Environment");
-			AndroidJavaObject enviObjJava = enviClassJava.GetStatic<AndroidJavaObject>(environment == Environment.production ? "production" : "development");
+			AndroidJavaObject enviObjJava = enviClassJava.GetStatic<AndroidJavaObject>(environment == Environment.Production ? "production" : "development");
 			AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
         	AndroidJavaObject activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
 			growthPush.Call<AndroidJavaObject>("initialize", activity, applicationId, secret, enviObjJava, debug);
@@ -62,7 +62,7 @@ public class GrowthPushAndroid
 		return this;
 	}
 	
-	public GrowthPushAndroid register(string senderId) 
+	public GrowthPushAndroid Register(string senderId) 
 	{
 #if UNITY_ANDROID && !UNITY_EDITOR
 		if( growthPush != null )
@@ -77,12 +77,12 @@ public class GrowthPushAndroid
 		return this;
 	}
 	
-	public void trackEvent(string name) 
+	public void TrackEvent(string name) 
 	{
-		trackEvent(name, "");
+		TrackEvent(name, "");
 	}
 	
-	public void trackEvent(string name, string val) 
+	public void TrackEvent(string name, string val) 
 	{
 #if UNITY_ANDROID && !UNITY_EDITOR
 		if( growthPush != null )
@@ -96,12 +96,12 @@ public class GrowthPushAndroid
 #endif
 	}
 	
-	public void setTag(string name) 
+	public void SetTag(string name) 
 	{
-		setTag(name, "");
+		SetTag(name, "");
 	}
 		
-	public void setTag(string name, string val) 
+	public void SetTag(string name, string val) 
 	{
 #if UNITY_ANDROID && !UNITY_EDITOR
 		if( growthPush != null )
@@ -115,7 +115,7 @@ public class GrowthPushAndroid
 #endif
 	}
 		
-	public void setDeviceTags() 
+	public void SetDeviceTags() 
 	{
 #if UNITY_ANDROID && !UNITY_EDITOR
 		if( growthPush != null )

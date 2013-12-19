@@ -8,11 +8,11 @@ public class GrowthPush
 {
 	public enum Environment
 	{
-		unknown = 0,
-		development,
-		production
+		Unknown = 0,
+		Development,
+		Production
 	};
-	
+	  
 	public enum Option
 	{
 		None = GrowthPushIOS.EGPOption.EGPOptionNone,
@@ -28,119 +28,119 @@ public class GrowthPush
 		All = GrowthPushIOS.EGPOption.EGPOptionAll,
 	};
 	
-	public static void initialize(int applicationId, string secret)
+	public static void Initialize(int applicationId, string secret)
 	{
-		initialize(applicationId, secret, Environment.production);
+		Initialize(applicationId, secret, Environment.Production);
 	}
 	
-	public static void initialize(int applicationId, string secret, Environment environment)
+	public static void Initialize(int applicationId, string secret, Environment environment)
 	{
-		initialize(applicationId, secret, environment, Option.All);
+		Initialize(applicationId, secret, environment, Option.All);
 	}
 	
-	public static void initialize(int applicationId, string secret, Environment environment, Option option)
+	public static void Initialize(int applicationId, string secret, Environment environment, Option option)
 	{
-		initialize(applicationId, secret, environment, Option.All, false);
+		Initialize(applicationId, secret, environment, Option.All, false);
 	}
 	
-	public static void initialize(int applicationId, string secret, Environment environment, Option option, bool debug)
+	public static void Initialize(int applicationId, string secret, Environment environment, Option option, bool debug)
 	{
 #if UNITY_ANDROID
-		GrowthPushAndroid.Environment environmentAndroid = GrowthPushAndroid.Environment.development;
-		if(environment == Environment.production)
-			environmentAndroid = GrowthPushAndroid.Environment.production;		
-		GrowthPushAndroid.getInstance().initialize(applicationId, secret, environmentAndroid, debug); 
+		GrowthPushAndroid.Environment environmentAndroid = GrowthPushAndroid.Environment.Development;
+		if(environment == Environment.Production)
+			environmentAndroid = GrowthPushAndroid.Environment.Production;		
+		GrowthPushAndroid.GetInstance().Initialize(applicationId, secret, environmentAndroid, debug); 
 #elif UNITY_IPHONE
-		GrowthPushIOS.setApplicationId(applicationId, secret, (GrowthPushIOS.GPEnvironment)environment, debug);
+		GrowthPushIOS.SetApplicationId(applicationId, secret, (GrowthPushIOS.GPEnvironment)environment, debug);
 #endif
 	}
 	
-	public static void register()
+	public static void Register ()
 	{
-		register("");
+		Register("");
 	}
 	
-	public static void register(string senderId)
+	public static void Register(string senderId)
 	{
 #if UNITY_ANDROID
-		GrowthPushAndroid.getInstance().register(senderId);
+		GrowthPushAndroid.GetInstance().Register(senderId);
 #elif UNITY_IPHONE
-		GrowthPushIOS.requestDeviceToken(deviceToken => {
+		GrowthPushIOS.RequestDeviceToken(deviceToken => {
 			if (deviceToken != null && deviceToken.Length != 0) 
 			{
-				GrowthPushIOS.setDeviceToken(deviceToken);
+				GrowthPushIOS.SetDeviceToken(deviceToken);
 			}
 		});
 #endif
 	}
 	
-	public static void trackEvent(string name)
+	public static void TrackEvent(string name)
 	{
-		trackEvent(name, "");
+		TrackEvent(name, "");
 	}
 	
-	public static void trackEvent(string name, string val)
+	public static void TrackEvent(string name, string val)
 	{
 #if UNITY_ANDROID
-		GrowthPushAndroid.getInstance().trackEvent(name, val);
+		GrowthPushAndroid.GetInstance().TrackEvent(name, val);
 #elif UNITY_IPHONE
-		GrowthPushIOS.trackEvent(name, val);
+		GrowthPushIOS.TrackEvent(name, val);
 #endif
 	}
 
-	public static void setTag(string name)
+	public static void SetTag(string name)
 	{
-		setTag(name, "");
+		SetTag(name, "");
 	}
 	
-	public static void setTag(string name, string val)
-	{
-#if UNITY_ANDROID
-		GrowthPushAndroid.getInstance().setTag(name, val);
-#elif UNITY_IPHONE
-		GrowthPushIOS.setTag(name, val);
-#endif
-	}
-	
-	public static void requestDeviceToken()
-	{
-#if UNITY_IPHONE
-		GrowthPushIOS.requestDeviceToken(null);
-#endif
-	}
-	
-  	public static void setDeviceToken(string deviceToken)
-	{
-#if UNITY_IPHONE
-		GrowthPushIOS.setDeviceToken(deviceToken);
-#endif
-	}
-	
-  	public static void setDeviceTags()
+	public static void SetTag(string name, string val)
 	{
 #if UNITY_ANDROID
-		GrowthPushAndroid.getInstance().setDeviceTags();
+		GrowthPushAndroid.GetInstance().SetTag(name, val);
 #elif UNITY_IPHONE
-		GrowthPushIOS.setDeviceTags();
+		GrowthPushIOS.SetTag(name, val);
 #endif
 	}
 	
-  	public static void clearBadge()
+	public static void RequestDeviceToken()
 	{
 #if UNITY_IPHONE
-		GrowthPushIOS.clearBadge();
+		GrowthPushIOS.RequestDeviceToken(null);
 #endif
 	}
 	
-	public static void launchWithNotification(Action<Dictionary<string, object>> callback)
+  	public static void SetDeviceToken(string deviceToken)
+	{
+#if UNITY_IPHONE
+		GrowthPushIOS.SetDeviceToken(deviceToken);
+#endif
+	}
+	
+  	public static void SetDeviceTags()
+	{
+#if UNITY_ANDROID
+		GrowthPushAndroid.GetInstance().SetDeviceTags();
+#elif UNITY_IPHONE
+		GrowthPushIOS.SetDeviceTags();
+#endif
+	}
+	
+  	public static void ClearBadge()
+	{
+#if UNITY_IPHONE
+		GrowthPushIOS.ClearBadge();
+#endif
+	}
+	
+	public static void LaunchWithNotification(Action<Dictionary<string, object>> callback)
 	{
 		GrowthPushReceive receive = GrowthPushReceive.CreateGO();
 		if(receive != null)
-			receive.launchWithNotificationCallback = callback;
+			receive.LaunchWithNotificationCallback = callback;
 #if UNITY_IPHONE
 		GrowthPushIOS.callTrackGrowthPushMessage();
 #elif UNITY_ANDROID
-		GrowthPushAndroid.getInstance().callTrackGrowthPushMessage();
+		GrowthPushAndroid.GetInstance().callTrackGrowthPushMessage();
 #endif
 	}
 }

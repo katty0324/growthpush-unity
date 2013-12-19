@@ -25,7 +25,7 @@ void callTrackGrowthPushMessage()
 {
     if(growthPushMessage != 0)
     {
-        UnitySendMessage("GrowthPushReceiveIOS", "launchWithNotification", growthPushMessage );
+        UnitySendMessage("GrowthPushReceiveIOS", "LaunchWithNotification", growthPushMessage );
         free(growthPushMessage);
         growthPushMessage = 0;
     }
@@ -76,12 +76,6 @@ BOOL app42RunTimeDidFinishLaunching(id self, SEL _cmd, id application, id launch
         
         if (jsonString)
             saveGrowthPushMessage([jsonString UTF8String]);
-        else
-            [GrowthPush trackEvent:@"Launch"];
-    }
-    else
-    {
-        [GrowthPush trackEvent:@"Launch"];
     }
 	return result;
 }
@@ -93,7 +87,7 @@ void app42RunTimeDidRegisterForRemoteNotificationsWithDeviceToken(id self, SEL _
     {
 		[self application:application app42didRegisterForRemoteNotificationsWithDeviceToken:devToken];
 	}
-    UnitySendMessage("GrowthPushReceiveIOS", "onDidRegisterForRemoteNotificationsWithDeviceToken", [[devToken description] UTF8String]);
+    UnitySendMessage("GrowthPushReceiveIOS", "OnDidRegisterForRemoteNotificationsWithDeviceToken", [[devToken description] UTF8String]);
 
 }
 
@@ -105,7 +99,7 @@ void app42RunTimeDidFailToRegisterForRemoteNotificationsWithError(id self, SEL _
 	}
 	NSString *errorString = [error description];
     const char * str = [errorString UTF8String];
-    UnitySendMessage("GrowthPushReceiveIOS", "onDidFailToRegisterForRemoteNotificationsWithError", str);
+    UnitySendMessage("GrowthPushReceiveIOS", "OnDidFailToRegisterForRemoteNotificationsWithError", str);
 }
 
 void app42RunTimeDidReceiveRemoteNotification(id self, SEL _cmd, id application, id userInfo)
@@ -128,7 +122,7 @@ void app42RunTimeDidReceiveRemoteNotification(id self, SEL _cmd, id application,
         jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     
     if (jsonString)
-        UnitySendMessage("GrowthPushReceiveIOS", "launchWithNotification", [jsonString UTF8String] );
+        UnitySendMessage("GrowthPushReceiveIOS", "LaunchWithNotification", [jsonString UTF8String] );
 }
 
 

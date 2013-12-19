@@ -33,11 +33,11 @@ public abstract class GrowthPushReceive : MonoBehaviour
 		return receive;
 	}	
 	
-	public Action<Dictionary<string, object>> launchWithNotificationCallback = null;
-	public void launchWithNotification(string query)
+	public Action<Dictionary<string, object>> LaunchWithNotificationCallback = null;
+	public void LaunchWithNotification(string query)
 	{
 		Debug.Log("query " + query);
-		if (launchWithNotificationCallback != null && query != null) 
+		if (LaunchWithNotificationCallback != null && query != null) 
 		{
 			Dictionary<string, object> obj = null;
 #if UNITY_ANDROID
@@ -52,9 +52,7 @@ public abstract class GrowthPushReceive : MonoBehaviour
 			obj = MiniJSON.Json.Deserialize(query) as Dictionary<string, object>;
 #endif
 			if(obj != null || obj.Count > 0)
-				launchWithNotificationCallback(obj);		
-			else
-				GrowthPush.trackEvent("Launch");
+				LaunchWithNotificationCallback(obj);		
 		}
 	}
 }
@@ -65,15 +63,15 @@ public class GrowthPushReceiveAndroid : GrowthPushReceive
 
 public class GrowthPushReceiveIOS : GrowthPushReceive
 {
-	public Action<string> didRegisterForRemoteNotificationsWithDeviceTokenCallback = null;
-	public void onDidRegisterForRemoteNotificationsWithDeviceToken(string deviceToken)
+	public Action<string> DidRegisterForRemoteNotificationsWithDeviceTokenCallback = null;
+	public void OnDidRegisterForRemoteNotificationsWithDeviceToken(string deviceToken)
 	{
-		if (didRegisterForRemoteNotificationsWithDeviceTokenCallback != null) 
-			didRegisterForRemoteNotificationsWithDeviceTokenCallback(deviceToken);			
+		if (DidRegisterForRemoteNotificationsWithDeviceTokenCallback != null) 
+			DidRegisterForRemoteNotificationsWithDeviceTokenCallback(deviceToken);			
 	}
 	
 	//Sent when the application failed to be registered with Apple Push Notification Service (APNS).
-	public void onDidFailToRegisterForRemoteNotificationsWithError(string error)
+	public void OnDidFailToRegisterForRemoteNotificationsWithError(string error)
 	{
 		Debug.Log(error);
 	}
