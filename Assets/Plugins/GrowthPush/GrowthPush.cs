@@ -15,17 +15,17 @@ public class GrowthPush
 	  
 	public enum Option
 	{
-		None = GrowthPushIOS.EGPOption.EGPOptionNone,
-		TrackLaunch = GrowthPushIOS.EGPOption.EGPOptionTrackLaunch,
-		TagDevice = GrowthPushIOS.EGPOption.EGPOptionTagDevice,
-		TagOS = GrowthPushIOS.EGPOption.EGPOptionTagOS,
-		TagLanguage = GrowthPushIOS.EGPOption.EGPOptionTagLanguage,
-		TagTimeZone = GrowthPushIOS.EGPOption.EGPOptionTagTimeZone,
-		TagVersion = GrowthPushIOS.EGPOption.EGPOptionTagVersion,
-		TagBuild = GrowthPushIOS.EGPOption.EGPOptionTagBuild,
-		TrackAll = GrowthPushIOS.EGPOption.EGPOptionTrackAll,
-		TagAll = GrowthPushIOS.EGPOption.EGPOptionTagAll,
-		All = GrowthPushIOS.EGPOption.EGPOptionAll,
+		None = 0,
+		TrackLaunch = 1 << 0,
+		TagDevice = 1 << 1,
+		TagOS = 1 << 2,
+		TagLanguage = 1 << 3,
+		TagTimeZone = 1 << 4,
+		TagVersion = 1 << 5,
+		TagBuild = 1 << 6,
+		TrackAll = TrackLaunch,
+		TagAll = TagDevice | TagOS | TagLanguage | TagTimeZone | TagVersion | TagBuild,
+		All = TrackAll | TagAll,
 	};
 	
 	public static void Initialize(int applicationId, string secret)

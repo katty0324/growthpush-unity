@@ -4,27 +4,6 @@ using System.Runtime.InteropServices;
 using System;
 
 public class GrowthPushIOS {
-	public enum EGPOption
-	{
-		EGPOptionNone = 0,
-		EGPOptionTrackLaunch = 1 << 0,
-		EGPOptionTagDevice = 1 << 1,
-		EGPOptionTagOS = 1 << 2,
-		EGPOptionTagLanguage = 1 << 3,
-		EGPOptionTagTimeZone = 1 << 4,
-		EGPOptionTagVersion = 1 << 5,
-		EGPOptionTagBuild = 1 << 6,
-		EGPOptionTrackAll = EGPOptionTrackLaunch,
-		EGPOptionTagAll = EGPOptionTagDevice | EGPOptionTagOS | EGPOptionTagLanguage | EGPOptionTagTimeZone | EGPOptionTagVersion | EGPOptionTagBuild,
-		EGPOptionAll = EGPOptionTrackAll | EGPOptionTagAll,
-	};
-	
-	public enum GPEnvironment
-	{
-		GPEnvironmentUnknown = 0,
-	    GPEnvironmentDevelopment,
-	    GPEnvironmentProduction,
-	};
 	
 #if UNITY_IPHONE	
 	[DllImport("__Internal")]
