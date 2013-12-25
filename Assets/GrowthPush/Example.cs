@@ -4,15 +4,15 @@ using System.Collections.Generic;
 public class Example : MonoBehaviour {
 	
 	public int appID = 0;
-	public string secrect = "secret";
-	public bool debug = true;
+	public string secret = "secret";
 	public GrowthPush.Environment environment = GrowthPush.Environment.Development;
+	public bool debug = true;
 	public GrowthPush.Option option = GrowthPush.Option.All;
 	public string senderID = "0000000000000";
 
 	void Awake ()
 	{
-		GrowthPush.Initialize (appID, secrect, environment, option, debug);
+		GrowthPush.Initialize (appID, secret, environment, debug, option);
 		GrowthPush.Register (senderID);
 		GrowthPush.ClearBadge (); 
  

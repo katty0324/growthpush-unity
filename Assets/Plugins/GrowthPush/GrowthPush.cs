@@ -35,15 +35,15 @@ public class GrowthPush
 	
 	public static void Initialize(int applicationId, string secret, Environment environment)
 	{
-		Initialize(applicationId, secret, environment, Option.All);
+		Initialize(applicationId, secret, environment, false);
 	}
 	
-	public static void Initialize(int applicationId, string secret, Environment environment, Option option)
+	public static void Initialize(int applicationId, string secret, Environment environment, bool debug)
 	{
-		Initialize(applicationId, secret, environment, Option.All, false);
+		Initialize(applicationId, secret, environment, debug , Option.All);
 	}
 	
-	public static void Initialize(int applicationId, string secret, Environment environment, Option option, bool debug)
+	public static void Initialize(int applicationId, string secret, Environment environment, bool debug, Option option)
 	{
 #if UNITY_ANDROID
 		GrowthPushAndroid.Environment environmentAndroid = GrowthPushAndroid.Environment.Development;
@@ -51,7 +51,7 @@ public class GrowthPush
 			environmentAndroid = GrowthPushAndroid.Environment.Production;		
 		GrowthPushAndroid.GetInstance().Initialize(applicationId, secret, environmentAndroid, debug); 
 #elif UNITY_IPHONE
-		GrowthPushIOS.SetApplicationId(applicationId, secret, (GrowthPushIOS.GPEnvironment)environment, debug);
+		GrowthPushIOS.SetApplicationId(applicationId, secret, environment, debug, option);
 #endif
 	}
 	
