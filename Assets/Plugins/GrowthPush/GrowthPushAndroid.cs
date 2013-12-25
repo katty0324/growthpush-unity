@@ -33,26 +33,16 @@ public class GrowthPushAndroid
 #endif
 	}
 
-	public GrowthPushAndroid Initialize(int applicationId, string secret) 
-	{
-		return Initialize(applicationId, secret, Environment.Production, false);
-	}
-
-	public GrowthPushAndroid Initialize(int applicationId, string secret, Environment environment) 
-	{
-		return Initialize(applicationId, secret, environment, false);
-	}
-
 	public GrowthPushAndroid Initialize(int applicationId, string secret, Environment environment, bool debug) 
 	{		
 #if UNITY_ANDROID && !UNITY_EDITOR
 		if( growthPush != null )
 		{
-			AndroidJavaClass enviClassJava = new AndroidJavaClass("com.growthpush.model.Environment");
-			AndroidJavaObject enviObjJava = enviClassJava.GetStatic<AndroidJavaObject>(environment == Environment.Production ? "production" : "development");
+			AndroidJavaClass  environmentClass = new AndroidJavaClass("com.growthpush.model.Environment");
+			AndroidJavaObject environmentObject = environmentClass.GetStatic<AndroidJavaObject>(environment == Environment.Production ? "production" : "development");
 			AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
         	AndroidJavaObject activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-			growthPush.Call<AndroidJavaObject>("initialize", activity, applicationId, secret, enviObjJava, debug);
+			growthPush.Call<AndroidJavaObject>("initialize", activity, applicationId, secret, environmentObject, debug);
 		}
 		else
 		{
