@@ -10,44 +10,33 @@
 #import <GrowthPush/GrowthPush.h>
 #import "App42PushHandlerInternal.h"
 
-NSString* NSStringFromCharString(const char* in_str)
-{
+NSString* NSStringFromCharString(const char* in_str) {
+
     NSString* str = [NSString stringWithCString:in_str encoding:NSUTF8StringEncoding];
     return str;
+
 }
 
-extern "C" void _easyGrowthPush_setApplicationId(int applicationID, const char* secret, bool debug)
-{
-    [EasyGrowthPush setApplicationId:applicationID
-                              secret:NSStringFromCharString(secret)
-                         environment:kGrowthPushEnvironment
-                               debug:debug];
+extern "C" void _easyGrowthPush_setApplicationId(int applicationID, const char* secret, int environment, bool debug, int option) {
+
+    [EasyGrowthPush setApplicationId:applicationID secret:NSStringFromCharString(secret) environment:environment debug:debug option:option];
+
 }
 
-extern "C" void _easyGrowthPush_setApplicationId_option(int applicationID, const char* secret, bool debug, int option)
-{
-    [EasyGrowthPush setApplicationId:applicationID
-                              secret:NSStringFromCharString(secret)
-                         environment:kGrowthPushEnvironment
-                               debug:debug
-                              option:option];
+extern "C" void _growthPush_setApplicationId(int applicationID, const char* secret, int environment, bool debug, int option) {
+
+    [GrowthPush setApplicationId:applicationID secret:NSStringFromCharString(secret) environment:environment debug:debug];
+
 }
 
-extern "C" void _growthPush_setApplicationId(int applicationID, const char* secret, int environment, bool debug, int option)
-{
-    [GrowthPush setApplicationId:applicationID
-                          secret:NSStringFromCharString(secret)
-                     environment:environment
-                           debug:debug];
+extern "C" void _easyGrowthPush_requestDeviceToken() {
+
+    [EasyGrowthPush requestDeviceToken];
+
 }
 
-extern "C" void _growthPush_requestDeviceToken()
-{
-    [GrowthPush requestDeviceToken];
-}
+extern "C" void _easyGrowthPush_setDeviceToken(const char* deviceToken) {
 
-extern "C" void _growthPush_setDeviceToken(const char* deviceToken)
-{
     NSString *str = NSStringFromCharString(deviceToken);
     str = [str lowercaseString];
     NSMutableData *data= [NSMutableData new];
@@ -66,38 +55,43 @@ extern "C" void _growthPush_setDeviceToken(const char* deviceToken)
         
     }
 
-    [GrowthPush setDeviceToken:data];
+    [EasyGrowthPush setDeviceToken:data];
+
 }
 
 
-extern "C" void _growthPush_trackEvent(const char* name)
-{
-    [GrowthPush trackEvent:NSStringFromCharString(name)];
+extern "C" void _easyGrowthPush_trackEvent(const char* name) {
+
+    [EasyGrowthPush trackEvent:NSStringFromCharString(name)];
+
 }
 
-extern "C" void _growthPush_trackEvent_value(const char* name, const char* value)
-{
-    [GrowthPush trackEvent:NSStringFromCharString(name)
-                     value:NSStringFromCharString(value)];
+extern "C" void _easyGrowthPush_trackEvent_value(const char* name, const char* value) {
+
+    [EasyGrowthPush trackEvent:NSStringFromCharString(name) value:NSStringFromCharString(value)];
+
 }
 
-extern "C" void _growthPush_setTag(const char* name)
-{
-    [GrowthPush setTag:NSStringFromCharString(name)];
+extern "C" void _easyGrowthPush_setTag(const char* name) {
+
+    [EasyGrowthPush setTag:NSStringFromCharString(name)];
+
 }
 
-extern "C" void _growthPush_setTag_value(const char* name, const char* value)
-{
-    [GrowthPush setTag:NSStringFromCharString(name)
-                 value:NSStringFromCharString(value)];
+extern "C" void _easyGrowthPush_setTag_value(const char* name, const char* value) {
+
+    [EasyGrowthPush setTag:NSStringFromCharString(name) value:NSStringFromCharString(value)];
+
 }
 
-extern "C" void _growthPush_setDeviceTags()
-{
-    [GrowthPush setDeviceTags];
+extern "C" void _easyGrowthPush_setDeviceTags() {
+
+    [EasyGrowthPush setDeviceTags];
+
 }
 
-extern "C" void _growthPush_clearBadge()
-{
-    [GrowthPush clearBadge];
+extern "C" void _easyGrowthPush_clearBadge() {
+
+    [EasyGrowthPush clearBadge];
+
 }
