@@ -5,7 +5,9 @@ using System;
 public class GrowthPushAndroid
 {
 		private static GrowthPushAndroid instance = new GrowthPushAndroid ();
-		private static AndroidJavaObject growthPush;
+		#if UNITY_ANDROID && !UNITY_EDITOR
+			private static AndroidJavaObject growthPush;
+		#endif
 
 		public GrowthPushAndroid ()
 		{
