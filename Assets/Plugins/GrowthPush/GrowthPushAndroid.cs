@@ -90,7 +90,9 @@ public class GrowthPushAndroid
 				using(AndroidJavaObject java = new AndroidJavaClass("com.growthpush.ExternalFramework"))
 				{
 				java.CallStatic("setFramework", "unity");
+				java.CallStatic("callTrackGrowthPushMessage");
 				}
+
 				#endif
 		}
 }

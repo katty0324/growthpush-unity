@@ -8,6 +8,7 @@ public class GrowthPush
 {
 		public enum Environment
 		{
+				Unknown,
 				Development,
 				Production
 		}

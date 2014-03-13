@@ -37,7 +37,7 @@ public abstract class GrowthPushReceive : MonoBehaviour
 				}
 		}
 
-		public void setLaunchNotificationCallback(Action<Dictionary<string, object>> callback) 
+		public void setLaunchNotificationCallback (Action<Dictionary<string, object>> callback)
 		{
 				this.LaunchWithNotificationCallback = callback;
 		}
