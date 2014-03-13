@@ -140,12 +140,9 @@ public class GrowthPush
 
 		public static void DefaultLaunchWithNotificationCallback (Dictionary<string, object> query)
 		{
-		
 				if (query != null && query.ContainsKey ("growthpush")) {
-						Debug.Log ("growthpush exists");
 						Dictionary<string, object> gpJson = query ["growthpush"] as Dictionary<string, object>;
 						if (gpJson.ContainsKey ("notificationId")) {
-								Debug.Log ("congraturation");
 								GrowthPush.TrackEvent ("Launch via push notification " + gpJson ["notificationId"]);
 						}
 				}
