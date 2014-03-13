@@ -45,9 +45,9 @@ public class GrowthPush
 		public static void Initialize (int applicationId, string secret, Environment environment, bool debug, Option option)
 		{
 			#if UNITY_ANDROID	
-							GrowthPushAndroid.GetInstance().Initialize(applicationId, secret, environment, debug); 
+				GrowthPushAndroid.GetInstance().Initialize(applicationId, secret, environment, debug);
 			#elif UNITY_IPHONE
-							GrowthPushIOS.SetApplicationId(applicationId, secret, environment, debug, option);
+				GrowthPushIOS.SetApplicationId(applicationId, secret, environment, debug, option); 
 			#endif
 		}
 

@@ -2,10 +2,11 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Plugins/GrowthPush/GrowthPushAndroid.cs">
     <Files>
-      <File FileName="Assets/Plugins/GrowthPush/GrowthPush.cs" Line="23" Column="24" />
-      <File FileName="Assets/Plugins/GrowthPush/GrowthPushAndroid.cs" Line="84" Column="34" />
-      <File FileName="Assets/Plugins/GrowthPush/GrowthPushIOS.cs" Line="15" Column="27" />
-      <File FileName="Assets/Plugins/GrowthPush/GrowthPushReceive.cs" Line="44" Column="4" />
+      <File FileName="Assets/Plugins/GrowthPush/GrowthPush.cs" Line="133" Column="43" />
+      <File FileName="Assets/Plugins/GrowthPush/GrowthPushAndroid.cs" Line="2" Column="26" />
+      <File FileName="Assets/Plugins/GrowthPush/GrowthPushIOS.cs" Line="16" Column="43" />
+      <File FileName="Assets/Plugins/GrowthPush/GrowthPushReceive.cs" Line="26" Column="6" />
+      <File FileName="../Documents/AutoSendEventTest_change/Assets/Plugins/GrowthPush/GrowthPushAndroid.cs" Line="33" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
