@@ -8,7 +8,6 @@ public class GrowthPushAndroid
 		#if UNITY_ANDROID && !UNITY_EDITOR
 			private static AndroidJavaObject growthPush;
 		#endif
-
 		public GrowthPushAndroid ()
 		{
 				#if UNITY_ANDROID && !UNITY_EDITOR

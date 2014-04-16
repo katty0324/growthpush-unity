@@ -104,15 +104,16 @@ void app42RunTimeDidFailToRegisterForRemoteNotificationsWithError(id self, SEL _
 
 void app42RunTimeDidReceiveRemoteNotification(id self, SEL _cmd, id application, id userInfo)
 {
-	if ([self respondsToSelector:@selector(application:app42didReceiveRemoteNotification:)])
+    
+    if (((UIApplication *)application).applicationState == UIApplicationStateActive)
     {
-		[self application:application app42didReceiveRemoteNotification:userInfo];
-	}
+        return;
+    }
     
     NSMutableDictionary *payload = [NSMutableDictionary dictionaryWithDictionary:userInfo];
     if(payload != nil)
         [payload removeObjectForKey:@"aps"];
-    
+
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:payload
                                                        options:NSJSONWritingPrettyPrinted
@@ -121,8 +122,15 @@ void app42RunTimeDidReceiveRemoteNotification(id self, SEL _cmd, id application,
     if(jsonData)
         jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     
+    if (growthPushMessage != 0) {
+        jsonString = [NSString stringWithCString:growthPushMessage encoding:NSUTF8StringEncoding];
+        free(growthPushMessage);
+        growthPushMessage = 0;
+    }
+    
     if (jsonString)
         UnitySendMessage("GrowthPushReceiveIOS", "LaunchWithNotification", [jsonString UTF8String] );
+
 }
 
 

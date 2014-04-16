@@ -45,11 +45,11 @@ public class GrowthPush
 
 		public static void Initialize (int applicationId, string secret, Environment environment, bool debug, Option option)
 		{
-			#if UNITY_ANDROID	
+				#if UNITY_ANDROID	
 				GrowthPushAndroid.GetInstance().Initialize(applicationId, secret, environment, debug);
-			#elif UNITY_IPHONE
+				#elif UNITY_IPHONE
 				GrowthPushIOS.SetApplicationId(applicationId, secret, environment, debug, option); 
-			#endif
+				#endif
 		}
 
 		public static void Register ()
@@ -59,16 +59,16 @@ public class GrowthPush
 
 		public static void Register (string senderId)
 		{
-			#if UNITY_ANDROID
+				#if UNITY_ANDROID
 					GrowthPushAndroid.GetInstance().Register(senderId);
-			#elif UNITY_IPHONE
+				#elif UNITY_IPHONE
 					GrowthPushIOS.RequestDeviceToken(deviceToken => {
 						if (deviceToken != null && deviceToken.Length != 0) 
 						{
 							GrowthPushIOS.SetDeviceToken(deviceToken);
 						}
 					});
-			#endif
+				#endif
 		}
 
 		public static void TrackEvent (string name)
@@ -78,11 +78,11 @@ public class GrowthPush
 
 		public static void TrackEvent (string name, string val)
 		{
-			#if UNITY_ANDROID
+				#if UNITY_ANDROID
 					GrowthPushAndroid.GetInstance().TrackEvent(name, val);
-			#elif UNITY_IPHONE
+				#elif UNITY_IPHONE
 					GrowthPushIOS.TrackEvent(name, val);
-			#endif
+				#endif
 		}
 
 		public static void SetTag (string name)
@@ -92,41 +92,41 @@ public class GrowthPush
 
 		public static void SetTag (string name, string val)
 		{
-			#if UNITY_ANDROID
+				#if UNITY_ANDROID
 					GrowthPushAndroid.GetInstance().SetTag(name, val);
-			#elif UNITY_IPHONE
+				#elif UNITY_IPHONE
 					GrowthPushIOS.SetTag(name, val);
-			#endif
+				#endif
 		}
 
 		public static void RequestDeviceToken ()
 		{
-			#if UNITY_IPHONE
+				#if UNITY_IPHONE
 					GrowthPushIOS.RequestDeviceToken(null);
-			#endif
+				#endif
 		}
 
 		public static void SetDeviceToken (string deviceToken)
 		{
-			#if UNITY_IPHONE
+				#if UNITY_IPHONE
 					GrowthPushIOS.SetDeviceToken(deviceToken);
-			#endif
+				#endif
 		}
 
 		public static void SetDeviceTags ()
 		{
-			#if UNITY_ANDROID
+				#if UNITY_ANDROID
 					GrowthPushAndroid.GetInstance().SetDeviceTags();
-			#elif UNITY_IPHONE
+				#elif UNITY_IPHONE
 					GrowthPushIOS.SetDeviceTags();
-			#endif
+				#endif
 		}
 
 		public static void ClearBadge ()
 		{
-			#if UNITY_IPHONE
+				#if UNITY_IPHONE
 					GrowthPushIOS.ClearBadge();
-			#endif
+				#endif
 		}
 
 		public static void LaunchWithNotification (Action<Dictionary<string, object>> callback)
