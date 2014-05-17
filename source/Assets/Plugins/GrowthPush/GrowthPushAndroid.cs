@@ -40,7 +40,7 @@ public class GrowthPushAndroid
 			instance.SetDeviceTags();
 		}
 
-		public void Initialize(int applicationId, string secret, GrowthPush.Environment environment, bool debug) {
+		public void Initialize(int applicationId, string secret, GrowthPush.Environment environment, bool debug, string senderId) {
 				if (growthPush == null)
 					return;
 				#if UNITY_ANDROID && !UNITY_EDITOR
@@ -49,13 +49,6 @@ public class GrowthPushAndroid
 					AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"); 
 					AndroidJavaObject activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity"); 
 					growthPush.Call<AndroidJavaObject>("initialize", activity, applicationId, secret, environmentObject, debug);
-				#endif
-		}
-
-		public void Register(string senderId) {
-				if (growthPush == null)
-					return;
-				#if UNITY_ANDROID && !UNITY_EDITOR
 					growthPush.Call<AndroidJavaObject>("register", senderId);
 				#endif
 		}

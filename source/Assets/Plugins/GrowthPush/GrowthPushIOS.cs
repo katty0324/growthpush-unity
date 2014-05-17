@@ -19,13 +19,7 @@ public class GrowthPushIOS
 			private static extern void _easyGrowthPush_setDeviceTags();
 
 			[DllImport("__Internal")]
-			private static extern void _easyGrowthPush_clearBadge();
-
-			[DllImport("__Internal")]
-			private static extern void _easyGrowthPush_requestDeviceToken();
-
-			[DllImport("__Internal")]
-			private static extern void _easyGrowthPush_setDeviceToken(string deviceToken);
+			private static extern void growthPushClearBadge();
 
 			// TODO Refactor callback flow
 			[DllImport("__Internal")]
@@ -34,7 +28,7 @@ public class GrowthPushIOS
 
 		public static void Initialize(int applicationID, string secrect, GrowthPush.Environment environment, bool debug) {
 				#if UNITY_IPHONE && !UNITY_EDITOR
-					_easyGrowthPush_setApplicationId(applicationID, secrect, (int)environment, debug;
+					_easyGrowthPush_setApplicationId(applicationID, secrect, (int)environment, debug);
 				#endif
 		}
 
@@ -59,23 +53,6 @@ public class GrowthPushIOS
 		public static void ClearBadge() {
 				#if UNITY_IPHONE && !UNITY_EDITOR
 					_easyGrowthPush_clearBadge();
-				#endif
-		}
-
-		// TODO Check if the following methods are needed.
-		public static void RequestDeviceToken (Action<string> didRequestDeviceToken) {
-				#if UNITY_IPHONE && !UNITY_EDITOR
-					GrowthPushReceiveIOS receive = GrowthPushReceive.getInstance () as GrowthPushReceiveIOS;
-					if(receive != null)
-						receive.DidRegisterForRemoteNotificationsWithDeviceTokenCallback = didRequestDeviceToken;
-					
-					_easyGrowthPush_requestDeviceToken();
-				#endif
-		}
-
-		public static void SetDeviceToken(string deviceToken) {
-				#if UNITY_IPHONE && !UNITY_EDITOR
-					_easyGrowthPush_setDeviceToken(deviceToken);
 				#endif
 		}
 

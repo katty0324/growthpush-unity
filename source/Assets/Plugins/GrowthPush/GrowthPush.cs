@@ -13,25 +13,18 @@ public class GrowthPush {
 		}
 
 		public static void Initialize(int applicationId, string secret, Environment environment, bool debug) {
-				#if UNITY_ANDROID	
-					GrowthPushAndroid.Initialize(applicationId, secret, environment, debug);
+				#if UNITY_ANDROID
 				#elif UNITY_IPHONE
 					GrowthPushIOS.Initialize(applicationId, secret, environment, debug); 
 				#endif
+
 		}
 
-		public static void RequestDeviceToken() {
-				#if UNITY_ANDROID
+		public static void Initialize(int applicationId, string secret, Environment environment, bool debug, string senderId) {
+				#if UNITY_ANDROID	
+					GrowthPushAndroid.Initialize(applicationId, secret, environment, debug, senderId);
 				#elif UNITY_IPHONE
-					GrowthPushIOS.RequestDeviceToken();
-				#endif
-		}
-
-		public static void RequestDeviceToken(string senderId) {
-				#if UNITY_ANDROID
-					GrowthPushAndroid.RequestDeviceToken(senderId);
-				#elif UNITY_IPHONE
-					RequestDeviceToken();
+					Initialize(applicationId, secret, environment, debug);
 				#endif
 		}
 
