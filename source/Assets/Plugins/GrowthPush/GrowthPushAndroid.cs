@@ -2,8 +2,8 @@ using UnityEngine;
 using System.Collections;
 using System;
 
-public class GrowthPushAndroid
-{
+public class GrowthPushAndroid {
+
 		private static GrowthPushAndroid instance = new GrowthPushAndroid();
 
 		#if UNITY_ANDROID && !UNITY_EDITOR
@@ -77,13 +77,4 @@ public class GrowthPushAndroid
 				#endif
 		}
 
-		// TODO Refactor callback flow
-		public void callTrackGrowthPushMessage() {
-				#if UNITY_ANDROID && !UNITY_EDITOR
-					using(AndroidJavaObject java = new AndroidJavaClass("com.growthpush.ExternalFramework")) {
-						java.CallStatic("setFramework", "unity");
-						java.CallStatic("callTrackGrowthPushMessage");
-					}
-				#endif
-		}
 }

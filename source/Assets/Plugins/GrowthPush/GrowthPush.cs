@@ -65,23 +65,5 @@ public class GrowthPush {
 					GrowthPushIOS.ClearBadge();
 				#endif
 		}
-
-		// TODO Refactor callback flow
-		public static void LaunchWithNotification (Action<Dictionary<string, object>> callback) {
-				GrowthPushReceive.getInstance ().setLaunchNotificationCallback (callback);
-				#if UNITY_IPHONE
-						GrowthPushIOS.callTrackGrowthPushMessage();
-				#elif UNITY_ANDROID
-						GrowthPushAndroid.GetInstance().callTrackGrowthPushMessage();
-				#endif
-		}
-
-		public static void DefaultLaunchWithNotificationCallback (Dictionary<string, object> query) {
-				if (query != null && query.ContainsKey ("growthpush")) {
-						Dictionary<string, object> gpJson = query ["growthpush"] as Dictionary<string, object>;
-						if (gpJson.ContainsKey ("notificationId")) {
-								GrowthPush.TrackEvent ("Launch via push notification " + gpJson ["notificationId"]);
-						}
-				}
-		}
+		
 }

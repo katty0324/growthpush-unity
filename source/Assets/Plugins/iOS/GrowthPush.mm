@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <GrowthPush/GrowthPush.h>
-#import "App42PushHandlerInternal.h"
 
 NSString* NSStringFromCharString(const char* charString) {
     return [NSString stringWithCString:charString encoding:NSUTF8StringEncoding];

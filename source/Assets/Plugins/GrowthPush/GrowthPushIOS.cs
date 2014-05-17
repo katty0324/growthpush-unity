@@ -3,8 +3,8 @@ using System.Collections;
 using System.Runtime.InteropServices;
 using System;
 
-public class GrowthPushIOS
-{
+public class GrowthPushIOS {
+
 		#if UNITY_IPHONE
 			[DllImport("__Internal")]
 			private static extern void growthPushSetApplicationId(int applicationID, string secrect, int environment, bool debug);
@@ -20,10 +20,6 @@ public class GrowthPushIOS
 
 			[DllImport("__Internal")]
 			private static extern void growthPushClearBadge();
-
-			// TODO Refactor callback flow
-			[DllImport("__Internal")]
-			public static extern void callTrackGrowthPushMessage();
 		#endif
 
 		public static void Initialize(int applicationID, string secrect, GrowthPush.Environment environment, bool debug) {
