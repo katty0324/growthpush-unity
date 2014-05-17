@@ -1,0 +1,9 @@
+= 0.1.1 (2013-11-25)
+
+* remove enum EGPOption and enum GPEnvironment from GrowthPushIOS class
+* revise different interface between iOS and android
+* change main class from GrowthPush to EasyGrowthPush in iOS
+
+= v.0.1.0 (2013-11-17)
+
+* Initial release
