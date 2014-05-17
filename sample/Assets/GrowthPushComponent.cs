@@ -3,12 +3,17 @@ using System.Collections;
 
 public class GrowthPushComponent : MonoBehaviour {
 
-	// Use this for initialization
+	void Awake () {
+		GrowthPush.Initialize(1075, "IUblO1kYXwGRGBrXnXYwoOLN6ubKPjPe", GrowthPush.Environment.Development, true, "1000565500410");
+		GrowthPush.TrackEvent("Launch");
+		GrowthPush.SetDeviceTags();
+		GrowthPush.ClearBadge();
+	}
+
 	void Start () {
 		
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 	
 	}
