@@ -10,6 +10,8 @@
 #import <GrowthPush/GrowthPush.h>
 
 NSString* NSStringFromCharString(const char* charString) {
+	if(charString == NULL)
+		return nil;
     return [NSString stringWithCString:charString encoding:NSUTF8StringEncoding];
 }
 
