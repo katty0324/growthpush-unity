@@ -1,0 +1,3 @@
+#!/bin/sh
+
+ruby ./Assets/Editor/install.rb -y -o -l ./Assets/Plugins/iOS/GrowthPush.framework -p $1
