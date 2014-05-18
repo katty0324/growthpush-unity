@@ -1,1 +1,4 @@
-./PostprocessBuildPlayerSample
+#!/bin/sh
+
+./Assets/Editor/PostprocessBuildPlayerForGrowthPush $@
+
