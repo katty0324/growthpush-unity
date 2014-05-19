@@ -1,4 +1,4 @@
 #!/bin/sh
 
-./Assets/Editor/PostprocessBuildPlayerForGrowthPush $@
+./Assets/Editor/PostprocessBuildPlayerForGrowthPushLaunchViaPushNotification $@
 
