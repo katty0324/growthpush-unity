@@ -1,6 +1,0 @@
-#!/bin/sh
-
-mkdir -p /tmp/GrowthPushLaunchViaPushNotification/
-( cat ./Assets/Editor/install.rb ; cat ./Assets/Editor/install-launch-via-push-notification.rb ) > /tmp/GrowthPushLaunchViaPushNotification/install.rb
-ruby /tmp/GrowthPushLaunchViaPushNotification/install.rb -y -o -l ./Assets/Plugins/iOS/GrowthPush.framework -p $1
-rm -rf /tmp/GrowthPushLaunchViaPushNotification/
