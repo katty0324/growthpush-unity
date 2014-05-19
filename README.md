@@ -62,6 +62,41 @@ You can get furthermore information on [GrowthPush documetations](https://growth
   GrowthPush.ClearBadge();
   ```
 
+## How to track "Launch via push notification xxx"
+
+1. growthpush-launch-via-push-notification.unitypackage
+
+1. Rename AndroidManifestSampleForGrowthPushLaunchViaPushNotification.xml to AndroidManifest.xml, or add the following code if AndroidManifest.xml exists.
+
+  ```xml
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+  <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+  <uses-permission android:name="android.permission.VIBRATE" />
+  <uses-permission android:name="android.permission.WAKE_LOCK" />
+  
+  <permission android:name="YOUR_APPLICATION_PACKAGE_NAME.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+  <uses-permission android:name="YOUR_APPLICATION_PACKAGE_NAME.permission.C2D_MESSAGE" />
+  ```
+
+  ```xml
+  <activity
+      android:name="com.growthpush.view.AlertActivity"
+      android:configChanges="orientation|keyboardHidden"
+      android:launchMode="singleInstance"
+      android:theme="@android:style/Theme.Translucent" />
+  
+  <receiver
+      android:name="com.growthpush.LaunchViaPushNotificationBroadcastReceiver"
+      android:permission="com.google.android.c2dm.permission.SEND" >
+      <intent-filter>
+          <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+          <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+          <category android:name="YOUR_APPLICATION_PACKAGE_NAME" />
+      </intent-filter>
+  </receiver>
+  ```
+
 ## License
 
 Licensed under the Apache License.
