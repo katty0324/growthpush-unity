@@ -1,3 +1,11 @@
 #!/bin/sh
 
+gem list | grep xcodeproj > /dev/null
+if [ $? -ne 0 ]; then
+	gem install xcodeproj
+	if [ $? -ne 0 ]; then
+		sudo gem install xcodeproj
+	fi
+fi
+
 ruby ./Assets/Editor/install.rb -y -o -l ./Assets/Plugins/iOS/GrowthPush.framework -p $1
