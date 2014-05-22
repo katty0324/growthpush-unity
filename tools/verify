@@ -5,8 +5,8 @@ ROOT_DIR="${TOOL_DIR}/../"
 FILES=( \ 
 	'README.md' \ 
 	'LICENSE' \ 
-	'THIRD_PARTY_LICENSES' \ 
 	'CHANGES' \ 
+	'growthpush.unitypackage' \ 
 )
 
 for FILE in ${FILES[@]}; do
