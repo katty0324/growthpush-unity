@@ -21,6 +21,12 @@ You can get furthermore information on [GrowthPush documetations](https://growth
   ```bash
   ./Assets/Editor/PostprocessBuildPlayerForGrowthPush $@
   ```
+  
+1. PostprocessBuildPlayerSampleForGrowthPush need Ruby, RubyGems and xcodeproj gem.
+
+  ```bash
+  sudo gem install xcodeproj
+  ```
 
 1. Rename AndroidManifestSampleForGrowthPush.xml to AndroidManifest.xml, or add the following code if AndroidManifest.xml exists.
 
