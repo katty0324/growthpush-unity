@@ -1,8 +1,14 @@
 #!/bin/sh
 
-if [ -f ~/.bash_profile ] ; then
-. ~/.bash_profile
-fi
+for SCRIPT in '~/.bash_profile' '~/.zshrc' '~/.cshrc'
+do
+	gem list | grep xcodeproj > /dev/null
+	if [ $? -ne 0 ]; then
+		if [ -f "$SCRIPT" ] ; then
+		. "$SCRIPT"
+		fi
+	fi
+done
 
 gem list | grep xcodeproj > /dev/null
 if [ $? -ne 0 ]; then
