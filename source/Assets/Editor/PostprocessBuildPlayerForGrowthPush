@@ -1,12 +1,12 @@
 #!/bin/sh
 
-for SCRIPT in '~/.bash_profile' '~/.zshrc' '~/.cshrc'
-do
+for SCRIPT in "$HOME/.bash_profile" "$HOME/.zshrc" ; do
 	gem list | grep xcodeproj > /dev/null
-	if [ $? -ne 0 ]; then
-		if [ -f "$SCRIPT" ] ; then
-		. "$SCRIPT"
-		fi
+	if [ $? -eq 0 ]; then
+		break
+	fi
+	if [ -f "$SCRIPT" ] ; then
+		source "$SCRIPT"
 	fi
 done
 
