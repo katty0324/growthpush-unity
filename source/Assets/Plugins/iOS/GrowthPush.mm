@@ -15,7 +15,7 @@ NSString* NSStringFromCharString(const char* charString) {
     return [NSString stringWithCString:charString encoding:NSUTF8StringEncoding];
 }
 
-extern "C" void growthPushSetApplicationId(int applicationID, const char* secret, int environment, bool debug, int option) {
+extern "C" void growthPushSetApplicationId(int applicationID, const char* secret, int environment, bool debug) {
     [EasyGrowthPush setApplicationId:applicationID secret:NSStringFromCharString(secret) environment:environment debug:debug option:EGPOptionNone];
 }
 
